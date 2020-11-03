@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Data.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Data.Models
 {
-    public class Product
+    public class Product : IModelBase
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -14,5 +15,8 @@ namespace Data.Models
         [ForeignKey("CategoryId")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
