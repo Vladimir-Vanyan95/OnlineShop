@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
-    [Authorize(Roles = "admin, user")]
-    public class HomeController : Controller
+    [Authorize(Roles = "admin")]
+    public class AdminController : Controller
     {
         public IActionResult Index()
         {

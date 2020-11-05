@@ -28,7 +28,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(UserLoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -44,6 +44,7 @@ namespace Web.Controllers
             }
             return View(model);
         }
+
         private async Task Authenticate(User user)
         {
             // создаем один claim
@@ -59,38 +60,39 @@ namespace Web.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
-        //[HttpGet]
-        //public IActionResult Register()
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Register(RegisterModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-        //        if (user == null)
-        //        {
-        //            // добавляем пользователя в бд
-        //            user = new User { Email = model.Email, Password = model.Password };
-        //            Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
-        //            if (userRole != null)
-        //                user.Role = userRole;
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userList = await _userRepository.GetAllDomain();
+                var user = userList.FirstOrDefault(u => u.Email == model.Email);
+                if (user == null)
+                {
+                    // добавляем пользователя в бд
+                    user = new User { Email = model.Email, Password = model.Password };
+                    Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+                    if (userRole != null)
+                        user.Role = userRole;
 
-        //            _context.Users.Add(user);
-        //            await _context.SaveChangesAsync();
+                    _context.Users.Add(user);
+                    await _context.SaveChangesAsync();
 
-        //            await Authenticate(user); // аутентификация
+                    await Authenticate(user); // аутентификация
 
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        else
-        //            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-        //    }
-        //    return View(model);
-        //}
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            }
+            return View(model);
+        }
     }
 }
