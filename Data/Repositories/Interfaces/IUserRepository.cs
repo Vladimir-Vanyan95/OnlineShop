@@ -9,6 +9,8 @@ namespace Data.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        Task<List<User>> GetAllDomain();
+        Task<List<User>> GetAllUsers();
+        Task<List<Role>> GetAllRoles();
+        Task AddUser(User user);
     }
 }

@@ -32,12 +32,15 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userList = await _userRepository.GetAllDomain();
+                var userList = await _userRepository.GetAllUsers();
                 var user = userList.FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
                 if (user != null)
                 {
                     await Authenticate(user); // аутентификация
-
+                    if (user.Role.Name == "admin")
+                    {
+                       return RedirectToAction("Index", "Admin");
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Incorrect login or password");
@@ -72,19 +75,18 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userList = await _userRepository.GetAllDomain();
+                var userList = await _userRepository.GetAllUsers();
                 var user = userList.FirstOrDefault(u => u.Email == model.Email);
                 if (user == null)
                 {
                     // добавляем пользователя в бд
-                    user = new User { Email = model.Email, Password = model.Password };
-                    Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+                    user = new User {FirstName=model.FirstName,LastName=model.LastName,Gender=model.Gender, Email = model.Email, Password = model.Password};
+                    var roleList = await _userRepository.GetAllRoles();
+                    var userRole = roleList.FirstOrDefault(r => r.Name == "user");
                     if (userRole != null)
                         user.Role = userRole;
 
-                    _context.Users.Add(user);
-                    await _context.SaveChangesAsync();
-
+                    await _userRepository.AddUser(user);
                     await Authenticate(user); // аутентификация
 
                     return RedirectToAction("Index", "Home");
