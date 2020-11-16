@@ -4,13 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form class="col-4 mx-auto" method="post" asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
+<form class="col-3 mx-auto mt-5" method="post" asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
     <div class="validation" asp-validation-summary="ModelOnly"></div>
     <h2 class="text-center">Sign In</h2>
     <div class="form-group">
-        <label for="exampleInputEmail1" asp-for="Email">Email address</label>
+        <label for="exampleInputEmail1" asp-for="Email">Email</label>
         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" asp-for="Email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         <span asp-validation-for="Email" />
     </div>
     <div class="form-group">
@@ -18,5 +17,8 @@
         <input type="password" class="form-control" id="exampleInputPassword1" asp-for="Password">
         <span asp-validation-for="Password" />
     </div>
-    <button type="submit" class="btn btn-primary">Войти</button>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Sign In</button>
+    </div>
+
 </form>
