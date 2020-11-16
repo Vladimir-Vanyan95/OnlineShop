@@ -13,7 +13,7 @@ namespace Data.Models
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
         public int? RoleId { get; set; }
         public Role Role { get; set; }
         public DateTime CreatedDate { get; set; }

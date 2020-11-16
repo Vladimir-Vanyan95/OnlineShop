@@ -10,14 +10,17 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-info">
-        <a class="navbar-brand" href="https://localhost:44376/">Online Market</a>
+        <a class="navbar-brand" href="#">Online Market</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse nav-nav" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="https://localhost:44376/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" asp-action="Index" asp-controller="Admin">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" asp-action="Index" asp-controller="Home">Client<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>
@@ -25,7 +28,7 @@
         <div class="navbar navbar-expand-lg navbar-light collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" asp-action="Login" asp-controller="Account">Sign out</a>
+                    <a class="nav-link" asp-action="SignOut" asp-controller="Account">Sign out</a>
                 </li>
             </ul>
         </div>
@@ -47,6 +50,7 @@
         @RenderBody()
     </div>
     <script src="~/js/site.js"></script>
+    <script src="~/jquery/jquery.js"></script>
     <script src="~/twitter-bootstrap/js/bootstrap.js"></script>
 </body>
 </html>

@@ -48,6 +48,13 @@ namespace Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SignOut()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
         private async Task Authenticate(User user)
         {
             // создаем один claim
@@ -79,15 +86,23 @@ namespace Web.Controllers
                 var user = userList.FirstOrDefault(u => u.Email == model.Email);
                 if (user == null)
                 {
-                    // добавляем пользователя в бд
-                    user = new User {FirstName=model.FirstName,LastName=model.LastName,Gender=model.Gender, Email = model.Email, Password = model.Password};
+                    user = new User 
+                    {
+                        FirstName=model.FirstName,
+                        LastName=model.LastName,
+                        Gender=model.Gender, 
+                        Email = model.Email, 
+                        Password = model.Password,
+                        CreatedDate = DateTime.Now,
+                        UpdatedDate = DateTime.Now
+                    };
                     var roleList = await _userRepository.GetAllRoles();
                     var userRole = roleList.FirstOrDefault(r => r.Name == "user");
                     if (userRole != null)
                         user.Role = userRole;
 
                     await _userRepository.AddUser(user);
-                    await Authenticate(user); // аутентификация
+                    await Authenticate(user);
 
                     return RedirectToAction("Index", "Home");
                 }
