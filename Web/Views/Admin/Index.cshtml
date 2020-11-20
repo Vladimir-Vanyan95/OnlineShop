@@ -3,6 +3,15 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
-<h1>Admin Index</h1>
-
+<div>
+    <a asp-controller="Admin" asp-action="CategoryAdd">Add Category</a>
+</div>
+<div>
+    <a  asp-controller="Admin" asp-action="ProductAdd">Add Product</a>
+</div>
+@foreach (var item in ViewBag.Categories)
+{
+    <div>
+        <h3>@item.Name</h3>
+    </div>
+}

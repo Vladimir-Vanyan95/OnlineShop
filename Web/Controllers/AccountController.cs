@@ -47,14 +47,13 @@ namespace Web.Controllers
             }
             return View(model);
         }
-
+                 
         [HttpGet]
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
         private async Task Authenticate(User user)
         {
             // создаем один claim

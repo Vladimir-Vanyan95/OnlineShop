@@ -1,0 +1,16 @@
+﻿@model CategoryAddViewModel
+@{
+    ViewData["Title"] = "CategoryAdd";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<form method="post" asp-controller="Admin" asp-action="CategoryAdd">
+    <div style="margin-top:15px;">
+        <label asp-for="Name">Input Name</label>
+        <input type="text" asp-for="Name" />
+    </div>
+    <div>
+        <button type="submit">Save</button>
+    </div>
+</form>
+
