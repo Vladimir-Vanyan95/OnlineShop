@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Data.Repositories.Interfaces
 {
     public interface ICategoryRepository
     {
-        void Add(CategoryViewModel categoryViewModel);
-        List<CategoryViewModel> GetAll();
-        void Delete(int id);
+        Task Add(CategoryAddViewModel categoryViewModel);
+        Task<List<CategoryViewModel>> GetAll();
+        Task Delete(int id);
     }
 }

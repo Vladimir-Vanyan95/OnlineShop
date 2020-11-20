@@ -1,10 +1,12 @@
 ﻿using Common.ViewModels;
 using Data.Models;
 using Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Data.Repositories
 {
@@ -17,7 +19,7 @@ namespace Data.Repositories
             _context = context;
         }
 
-        public void Add(ProductViewModel productAdd)
+        public async Task Add(ProductViewModel productAdd)
         {
             Product product = new Product
             {
@@ -26,29 +28,28 @@ namespace Data.Repositories
                 Discount = productAdd.Discount,
                 CategoryId = productAdd.CategoryId
             };
-            _context.Products.Add(product);
-            _context.SaveChanges();
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
         }
 
-        public List<ProductViewModel> GetAll()
+        public async Task<List<ProductViewModel>> GetAll()
         {
-            var allList = _context.Products.Select(p => new ProductViewModel
+            var allList = await _context.Products.Select(p => new ProductViewModel
             {
                 Id = p.Id,
                 Name = p.Name,
                 Price = p.Price,
                 Discount = p.Discount,
                 CategoryId = p.CategoryId
-            }).ToList();
+            }).ToListAsync();
             return allList;
 
         }
-
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Product product = _context.Products.Where(p => p.Id == id).FirstOrDefault();
+            Product product = await _context.Products.Where(p => p.Id == id).FirstOrDefaultAsync();
             _context.Products.Remove(product);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

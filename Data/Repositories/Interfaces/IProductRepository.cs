@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Data.Repositories.Interfaces
 {
     public interface IProductRepository
     {
-        void Add(ProductViewModel productViewModel);
-        List<ProductViewModel> GetAll();
-        void Delete(int id);
+        Task Add(ProductViewModel productViewModel);
+        Task<List<ProductViewModel>> GetAll();
+        Task Delete(int id);
     }
 }
