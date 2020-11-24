@@ -7,7 +7,7 @@ namespace Common.ViewModels
 {
    public class CategoryAddViewModel
     {
-      
+        [Required (ErrorMessage ="Name is empty")]
         public string Name { get; set; }
     }
 }

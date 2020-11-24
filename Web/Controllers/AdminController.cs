@@ -19,19 +19,21 @@ namespace Web.Controllers
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
         }
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            ViewBag.Categories =await _categoryRepository.GetAll();
-            return View(ViewBag.Categories);
-        }
-        [HttpGet]
-        public IActionResult ProductAdd()
+        public IActionResult Index()
         {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> ProductAdd(ProductAddViewModel productAdd)
+        //[HttpGet]
+        //public IActionResult ProductAdd()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public async Task<IActionResult> ProductAdd(ProductAddViewModel productAdd)
+        //{
+        //    return View();
+        //}
+        public async Task<IActionResult> Category()
         {
             return View();
         }
@@ -40,10 +42,15 @@ namespace Web.Controllers
         {
             return View();
         }
+        [HttpPost]
         public async Task<IActionResult> CategoryAdd(CategoryAddViewModel categoryAdd)
         {
-            await _categoryRepository.Add(categoryAdd);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                await _categoryRepository.Add(categoryAdd);
+                return RedirectToAction("Index");
+            }
+            return View();
         }
     }
 }
