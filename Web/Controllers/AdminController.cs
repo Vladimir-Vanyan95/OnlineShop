@@ -33,8 +33,13 @@ namespace Web.Controllers
         //{
         //    return View();
         //}
-        public async Task<IActionResult> Category()
+        public async Task<IActionResult> Category(int? Id=null)
         {
+            if (Id != null)
+            {
+                await _categoryRepository.Delete(Id);
+            }
+            ViewBag.AllCategories =await _categoryRepository.GetAll();
             return View();
         }
         [HttpGet]
@@ -48,7 +53,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 await _categoryRepository.Add(categoryAdd);
-                return RedirectToAction("Index");
+                return RedirectToAction("Category");
             }
             return View();
         }

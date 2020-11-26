@@ -10,6 +10,6 @@ namespace Data.Repositories.Interfaces
     {
         Task Add(CategoryAddViewModel categoryViewModel);
         Task<List<CategoryViewModel>> GetAll();
-        Task Delete(int id);
+        Task Delete(int? id);
     }
 }

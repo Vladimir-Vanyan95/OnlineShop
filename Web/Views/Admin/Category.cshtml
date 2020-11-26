@@ -7,5 +7,11 @@
     <div class="nav flex-column nav-pills bg-info">
         <a class="nav-link text-light" asp-controller="Admin" asp-action="CategoryAdd">Add Category</a>
     </div>
+    <div>
+        @foreach (var item in ViewBag.AllCategories)
+        {
+            <span>@item.Name </span><a asp-action="Category" asp-route-Id="@item.Id">Delete</a><br />
+        }
+    </div>
 </div>
 

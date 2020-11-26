@@ -19,7 +19,7 @@ namespace Data.Repositories
         }
         public async Task Add(CategoryAddViewModel categoryViewModel)
         {
-            Category category= new Category
+            Category category = new Category
             {
                 Name = categoryViewModel.Name
             };
@@ -27,10 +27,11 @@ namespace Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(int categoryId)
+        public async Task Delete(int? categoryId=null)
         {
             Category category = await _context.Categories.Where(c => c.Id == categoryId).FirstOrDefaultAsync();
             _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<CategoryViewModel>> GetAll()
