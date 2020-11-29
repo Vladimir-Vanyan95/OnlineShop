@@ -19,7 +19,7 @@ namespace Data.Repositories
             _context = context;
         }
 
-        public async Task Add(ProductViewModel productAdd)
+        public async Task<int> Add(ProductAddViewModel productAdd)
         {
             Product product = new Product
             {
@@ -30,6 +30,7 @@ namespace Data.Repositories
             };
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
+            return product.Id;
         }
 
         public async Task<List<ProductViewModel>> GetAll()
@@ -49,6 +50,17 @@ namespace Data.Repositories
         {
             Product product = await _context.Products.Where(p => p.Id == id).FirstOrDefaultAsync();
             _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddImages(List<ProductImageViewModel> imageModel)
+        {
+            var images = imageModel.Select(i => new ProductImage
+            {
+                FileName = i.FileName,
+                ProductId = i.ProductId
+            });
+            await _context.AddRangeAsync(images);
             await _context.SaveChangesAsync();
         }
     }

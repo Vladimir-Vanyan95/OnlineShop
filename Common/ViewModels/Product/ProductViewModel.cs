@@ -10,6 +10,7 @@ namespace Common.ViewModels
         public string Name { get; set; }
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
+        public string MainImage { get; set; }
         public int CategoryId { get; set; }
     }
 }

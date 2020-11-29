@@ -1,8 +1,37 @@
-﻿
+﻿@model ProductAddViewModel
 @{
     ViewData["Title"] = "ProductAdd";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
-<h1>ProductAdd</h1>
-
+<div class="container pt-3">
+    <form method="post" asp-action="ProductAdd" enctype="multipart/form-data">
+        <div class="form-group form-check">
+            <input asp-for="Name" type="text" placeholder="Input Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group form-check">
+            <input asp-for="Price" type="number" placeholder="Input Price" />
+            <span asp-validation-for="Price"></span>
+        </div>
+        <div class="form-group form-check">
+            <input asp-for="Discount" type="number" placeholder="Input Discount" />
+            <span asp-validation-for="Discount"></span>
+        </div>
+        <div class="form-group form-check">
+            <label asp-for="MainImage">Choose Image</label><br />
+            <input class="btn btn-secondary" type="file" name="ImageFile" multiple />
+        </div>
+        <div class="form-group form-check">
+            <select asp-for="CategoryId">
+                <option value="0">Select Category</option>
+                @foreach (var item in ViewBag.Categories)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group form-check">
+            <button class="btn btn-success" type="submit">Save</button>
+        </div>
+    </form>
+</div>

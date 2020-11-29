@@ -39,7 +39,7 @@ namespace Web.Controllers
                     await Authenticate(user); // аутентификация
                     if (user.Role.Name == "admin")
                     {
-                       return RedirectToAction("Index", "Admin");
+                        return RedirectToAction("Index", "Admin");
                     }
                     return RedirectToAction("Index", "Home");
                 }
@@ -47,7 +47,7 @@ namespace Web.Controllers
             }
             return View(model);
         }
-                 
+
         [HttpGet]
         public async Task<IActionResult> SignOut()
         {
@@ -85,12 +85,12 @@ namespace Web.Controllers
                 var user = userList.FirstOrDefault(u => u.Email == model.Email);
                 if (user == null)
                 {
-                    user = new User 
+                    user = new User
                     {
-                        FirstName=model.FirstName,
-                        LastName=model.LastName,
-                        Gender=model.Gender, 
-                        Email = model.Email, 
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Gender = model.Gender,
+                        Email = model.Email,
                         Password = model.Password,
                         CreatedDate = DateTime.Now,
                         UpdatedDate = DateTime.Now
