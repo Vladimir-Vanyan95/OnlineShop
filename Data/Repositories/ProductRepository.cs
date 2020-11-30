@@ -26,7 +26,9 @@ namespace Data.Repositories
                 Name = productAdd.Name,
                 Price = productAdd.Price,
                 Discount = productAdd.Discount,
-                CategoryId = productAdd.CategoryId
+                CategoryId = productAdd.CategoryId,
+                MainImage=productAdd.MainImage,
+                ProductStatus=productAdd.ProductStatus
             };
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -41,7 +43,9 @@ namespace Data.Repositories
                 Name = p.Name,
                 Price = p.Price,
                 Discount = p.Discount,
-                CategoryId = p.CategoryId
+                CategoryId = p.CategoryId,
+                MainImage=p.MainImage,
+                ProductStatus=p.ProductStatus
             }).ToListAsync();
             return allList;
 

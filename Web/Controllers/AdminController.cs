@@ -30,12 +30,13 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> Product()
         {
-            return View();
+            var products =await _productRepository.GetAll();
+            return View(products);
         }
         [HttpGet]
         public async Task<IActionResult> ProductAdd()
         {
-            ViewBag.Categories = await _categoryRepository.GetAll();
+            ViewBag.categories = await _categoryRepository.GetAll();
             return View();
         }
         [HttpPost]
@@ -44,6 +45,7 @@ namespace Web.Controllers
             ViewBag.Categories = await _categoryRepository.GetAll();
             if (ModelState.IsValid)
             {
+                productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
                 var id = await _productRepository.Add(productAdd);
                 if (ImageFile != null)
                 {
@@ -68,6 +70,7 @@ namespace Web.Controllers
                     }
                     await _productRepository.AddImages(images);
                 }
+                return RedirectToAction("Product");
             }
             return View();
         }

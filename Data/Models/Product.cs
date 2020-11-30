@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Common.Enums;
 
 namespace Data.Models
 {
@@ -15,6 +16,7 @@ namespace Data.Models
         [ForeignKey("CategoryId")]
         public int CategoryId { get; set; }
         public string MainImage { get; set; }
+        public ProductStatus ProductStatus { get; set; }
         public Category Category { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
