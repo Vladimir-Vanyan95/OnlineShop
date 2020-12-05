@@ -56,7 +56,19 @@ namespace Data.Repositories
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
-
+        public async Task<ProductAddViewModel> Edit(int Id)
+        {
+            return await _context.Products.Where(p => p.Id == Id).Select(p => new ProductAddViewModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                CategoryId = p.CategoryId,
+                Discount = p.Discount,
+                MainImage = p.MainImage,
+                Price = p.Price,
+                ProductStatus = p.ProductStatus
+            }).FirstOrDefaultAsync();
+        }
         public async Task AddImages(List<ProductImageViewModel> imageModel)
         {
             var images = imageModel.Select(i => new ProductImage
@@ -65,6 +77,17 @@ namespace Data.Repositories
                 ProductId = i.ProductId
             });
             await _context.AddRangeAsync(images);
+            await _context.SaveChangesAsync();
+        }
+        public async Task Update(ProductAddViewModel model)
+        {
+            var product =await _context.Products.FirstOrDefaultAsync(p => p.Id == model.Id);
+            product.Id = model.Id;
+            product.Name = model.Name;
+            product.CategoryId = model.CategoryId;
+            product.Discount = model.Discount;
+            product.MainImage = model.MainImage;
+            product.Price = model.Price;
             await _context.SaveChangesAsync();
         }
     }

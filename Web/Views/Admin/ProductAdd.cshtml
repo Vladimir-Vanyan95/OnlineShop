@@ -2,24 +2,32 @@
 @{
     ViewData["Title"] = "ProductAdd";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var buttonText = "Save";
+    if (Model != null)
+    {
+        buttonText = Model.Id == 0 ? "Add" : "Edit";
+    }
 }
 <div class="container pt-3">
     <form method="post" asp-action="ProductAdd" enctype="multipart/form-data">
+        <div class="form-group form-check">
+            <input type="hidden" asp-for="Id" />
+        </div>
         <div class="form-group form-check">
             <input asp-for="Name" type="text" placeholder="Input Name" />
             <span asp-validation-for="Name"></span>
         </div>
         <div class="form-group form-check">
-            <input asp-for="Price" type="number" placeholder="Input Price" />
+            <input asp-for="Price"  placeholder="Input Price" />
             <span asp-validation-for="Price"></span>
         </div>
         <div class="form-group form-check">
-            <input asp-for="Discount" type="number" placeholder="Input Discount" />
+            <input asp-for="Discount" placeholder="Input Discount" />
             <span asp-validation-for="Discount"></span>
         </div>
         <div class="form-group form-check">
             <label asp-for="MainImage">Choose Image</label><br />
-            <input class="btn btn-secondary" type="file" name="ImageFile" multiple />
+            <input  class="btn btn-secondary" type="file" name="ImageFile" multiple />
         </div>
         <div class="form-group form-check">
             <select asp-for="ProductStatus" asp-items="Html.GetEnumSelectList<ProductStatus>()">
@@ -37,7 +45,7 @@
             </select>
         </div>
         <div class="form-group form-check">
-            <button class="btn btn-success" type="submit">Save</button>
+            <button class="btn btn-success" type="submit">@buttonText</button>
         </div>
     </form>
 </div>

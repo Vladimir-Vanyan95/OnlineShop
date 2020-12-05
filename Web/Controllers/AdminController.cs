@@ -18,7 +18,7 @@ namespace Web.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository,IWebHostEnvironment hostEnvironment)
+        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment hostEnvironment)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
@@ -28,11 +28,22 @@ namespace Web.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Product()
+        public async Task<IActionResult> Edit(int Id)
         {
-            var products =await _productRepository.GetAll();
+            ViewBag.Categories = await _categoryRepository.GetAll();
+            var model = await _productRepository.Edit(Id);
+            return View("ProductAdd", model);
+        }
+        public async Task<IActionResult> Product(int Id = 0)
+        {
+            if (Id > 0)
+            {
+                await _productRepository.Delete(Id);
+            }
+            var products = await _productRepository.GetAll();
             return View(products);
         }
+
         [HttpGet]
         public async Task<IActionResult> ProductAdd()
         {
@@ -43,21 +54,27 @@ namespace Web.Controllers
         public async Task<IActionResult> ProductAdd(ProductAddViewModel productAdd, List<IFormFile> ImageFile)
         {
             ViewBag.Categories = await _categoryRepository.GetAll();
+            productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
             if (ModelState.IsValid)
             {
-                productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
-                var id = await _productRepository.Add(productAdd);
+                int Id = 0;
+                if (productAdd.Id > 0)
+                {
+                    Id = productAdd.Id;
+                    await _productRepository.Update(productAdd);
+                }
+                else { Id = await _productRepository.Add(productAdd); }
                 if (ImageFile != null)
                 {
                     List<ProductImageViewModel> images = new List<ProductImageViewModel>();
-                    var folderPath = _webHostEnvironment.WebRootPath + $"/images/{id}";
+                    var folderPath = _webHostEnvironment.WebRootPath + $"/images/{Id}";
                     if (!Directory.Exists(folderPath))
                     {
                         Directory.CreateDirectory(folderPath);
                     }
                     foreach (var item in ImageFile)
                     {
-                        var savePath = _webHostEnvironment.WebRootPath + $"/images/{id}/{item.FileName}";
+                        var savePath = _webHostEnvironment.WebRootPath + $"/images/{Id}/{item.FileName}";
                         using (var stream = new FileStream(savePath, FileMode.Create))
                         {
                             item.CopyTo(stream);
@@ -65,7 +82,7 @@ namespace Web.Controllers
                         images.Add(new ProductImageViewModel
                         {
                             FileName = item.FileName,
-                            ProductId = id
+                            ProductId = Id
                         });
                     }
                     await _productRepository.AddImages(images);
@@ -74,6 +91,10 @@ namespace Web.Controllers
             }
             return View();
         }
+        //public async Task<IActionResult> PageView()
+        //{
+        //    return View();
+        //}
         public async Task<IActionResult> Category(int? Id = null)
         {
             if (Id != null)

@@ -11,6 +11,8 @@ namespace Data.Repositories.Interfaces
         Task<int> Add(ProductAddViewModel productViewModel);
         Task<List<ProductViewModel>> GetAll();
         Task Delete(int id);
+        Task<ProductAddViewModel> Edit(int Id);
         Task AddImages(List<ProductImageViewModel> imageModel);
+        Task Update(ProductAddViewModel model);
     }
 }
