@@ -28,6 +28,7 @@
         <div class="form-group form-check">
             <label asp-for="MainImage">Choose Image</label><br />
             <input  class="btn btn-secondary" type="file" name="ImageFile" multiple />
+            @*<span asp-validation-for="MainImage"></span>*@
         </div>
         <div class="form-group form-check">
             <select asp-for="ProductStatus" asp-items="Html.GetEnumSelectList<ProductStatus>()">

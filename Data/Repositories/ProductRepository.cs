@@ -90,5 +90,18 @@ namespace Data.Repositories
             product.Price = model.Price;
             await _context.SaveChangesAsync();
         }
+        public async Task<ProductViewModel> FindById(int Id)
+        {
+            return await _context.Products.Where(p => p.Id == Id).Select(p => new ProductViewModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                Discount = p.Discount,
+                CategoryId = p.CategoryId,
+                MainImage = p.MainImage,
+                ProductStatus = p.ProductStatus
+            }).FirstOrDefaultAsync();
+        }
     }
 }

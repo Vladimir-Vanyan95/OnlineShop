@@ -1,0 +1,22 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = "ProductView";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link href="~/css/style.css" rel="stylesheet" />
+<div class="container">
+    <div>
+        <div class="form-group form-check">
+            <img style="height:auto; width:500px;" src="~/images/@Model.Id/@Model.MainImage" />
+            <div style="padding-left:150px; ">
+                <h2>@Model.Name</h2>
+            </div>
+            <div style="padding-left:150px;">
+                <h3>Price-@Model.Price</h3>
+            </div>
+            <div style="padding-left:150px;">
+                <h3>Discount-@Model.Discount</h3>
+            </div>
+        </div>
+    </div>
+</div>
