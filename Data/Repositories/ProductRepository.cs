@@ -27,8 +27,8 @@ namespace Data.Repositories
                 Price = productAdd.Price,
                 Discount = productAdd.Discount,
                 CategoryId = productAdd.CategoryId,
-                MainImage=productAdd.MainImage,
-                ProductStatus=productAdd.ProductStatus
+                MainImage = productAdd.MainImage,
+                ProductStatus = productAdd.ProductStatus
             };
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -44,8 +44,8 @@ namespace Data.Repositories
                 Price = p.Price,
                 Discount = p.Discount,
                 CategoryId = p.CategoryId,
-                MainImage=p.MainImage,
-                ProductStatus=p.ProductStatus
+                MainImage = p.MainImage,
+                ProductStatus = p.ProductStatus
             }).ToListAsync();
             return allList;
 
@@ -81,7 +81,7 @@ namespace Data.Repositories
         }
         public async Task Update(ProductAddViewModel model)
         {
-            var product =await _context.Products.FirstOrDefaultAsync(p => p.Id == model.Id);
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == model.Id);
             product.Id = model.Id;
             product.Name = model.Name;
             product.CategoryId = model.CategoryId;
@@ -89,6 +89,19 @@ namespace Data.Repositories
             product.MainImage = model.MainImage;
             product.Price = model.Price;
             await _context.SaveChangesAsync();
+        }
+        public async Task<ProductViewModel> FindById(int Id)
+        {
+            return await _context.Products.Where(p => p.Id == Id).Select(p => new ProductViewModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                Discount = p.Discount,
+                CategoryId = p.CategoryId,
+                MainImage = p.MainImage,
+                ProductStatus = p.ProductStatus
+            }).FirstOrDefaultAsync();
         }
     }
 }

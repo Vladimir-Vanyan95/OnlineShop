@@ -12,9 +12,9 @@ namespace Common.ViewModels
         [Required(ErrorMessage = "Please input Name")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Please input Price")]
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         [Required(ErrorMessage = "Please input Discount")]
-        public decimal Discount { get; set; }
+        public double Discount { get; set; }
         //[Required(ErrorMessage ="Please select Image")]
         public string MainImage { get; set; }
         public ProductStatus  ProductStatus{ get; set; }
