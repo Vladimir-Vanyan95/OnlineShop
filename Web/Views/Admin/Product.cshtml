@@ -9,19 +9,20 @@
     </div>
     <div class="row">
         <div class="card-deck">
-            
+
             @if (Model.Any())
             {
                 @foreach (var product in Model)
                 {
                     <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
-                        <div class="card-header" style="margin:auto">
-                            <a asp-action="ProductView" asp-route-Id="@product.Id"><h3 >@product.Name</h3></a>
+                        <div class="card-header">
+                            <a asp-action="View"><h3>@product.Name</h3></a>
                         </div>
-                        <a asp-action="ProductView" asp-route-Id="@product.Id">
+                        <a asp-action="View">
                             <img class="card-img-top imageThumbnail" src="/images/@product.Id/@product.MainImage"
                                  asp-append-version="true" />
                         </a>
+
                         <div class="card-footer text-center">
                             <a asp-action="Edit" asp-route-Id="@product.Id" class="btn btn-primary m-1">Edit</a>
                             <a class="btn btn-danger m-1" asp-route-Id="@product.Id">Delete</a>
@@ -29,6 +30,7 @@
                     </div>
                 }
             }
+
         </div>
     </div>
 </div>

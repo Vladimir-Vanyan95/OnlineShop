@@ -30,7 +30,7 @@ namespace Web
         {
             services.AddMvc();
 
-            services.AddDbContext<AppDbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("Shop")));
+            services.AddDbContext<AppDbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("OnlineMarketDB")));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

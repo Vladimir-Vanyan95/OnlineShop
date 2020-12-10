@@ -48,8 +48,7 @@ namespace Web.Controllers
         public async Task<IActionResult> ProductAdd()
         {
             ViewBag.categories = await _categoryRepository.GetAll();
-            ProductAddViewModel model = new ProductAddViewModel();
-            return View(model);
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> ProductAdd(ProductAddViewModel productAdd, List<IFormFile> ImageFile)
@@ -92,11 +91,10 @@ namespace Web.Controllers
             }
             return View();
         }
-        public async Task<IActionResult> ProductView(int Id)
-        {
-            var product =await _productRepository.FindById(Id);
-            return View(product);
-        }
+        //public async Task<IActionResult> PageView()
+        //{
+        //    return View();
+        //}
         public async Task<IActionResult> Category(int? Id = null)
         {
             if (Id != null)

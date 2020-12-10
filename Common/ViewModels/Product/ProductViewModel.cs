@@ -9,8 +9,8 @@ namespace Common.ViewModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public double Price { get; set; }
-        public double Discount { get; set; }
+        public decimal Price { get; set; }
+        public decimal? Discount { get; set; }
         public string MainImage { get; set; }
         public ProductStatus ProductStatus { get; set; }
         public int CategoryId { get; set; }
