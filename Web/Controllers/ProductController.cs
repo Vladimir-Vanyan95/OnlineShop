@@ -16,9 +16,10 @@ namespace Web.Controllers
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? categoryId)
         {
-            return View();
+            var products = await _productRepository.GetAll(categoryId);
+            return View(products);
         }
     }
 }

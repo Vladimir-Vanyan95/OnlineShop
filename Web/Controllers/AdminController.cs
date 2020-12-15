@@ -40,7 +40,7 @@ namespace Web.Controllers
             {
                 await _productRepository.Delete(Id);
             }
-            var products = await _productRepository.GetAll();
+            var products = await _productRepository.GetAll(null);
             return View(products);
         }
 
@@ -54,7 +54,7 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ProductAdd(ProductAddViewModel productAdd, List<IFormFile> ImageFile)
         {
-            ViewBag.Categories = await _categoryRepository.GetAll();
+            
             productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace Web.Controllers
                 }
                 return RedirectToAction("Product");
             }
-            return View();
+            return View(productAdd);
         }
         public async Task<IActionResult> ProductView(int Id)
         {

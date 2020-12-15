@@ -35,20 +35,20 @@ namespace Data.Repositories
             return product.Id;
         }
 
-        public async Task<List<ProductViewModel>> GetAll()
+        public async Task<List<ProductViewModel>> GetAll(int? categoryId)
         {
-            var allList = await _context.Products.Select(p => new ProductViewModel
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Price = p.Price,
-                Discount = p.Discount,
-                CategoryId = p.CategoryId,
-                MainImage = p.MainImage,
-                ProductStatus = p.ProductStatus
-            }).ToListAsync();
-            return allList;
-
+            var products = await _context.Products.Where(p => (categoryId == null || p.CategoryId == categoryId)).Select
+                (p => new ProductViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    CategoryId = p.CategoryId,
+                    Discount = p.Discount,
+                    MainImage = p.MainImage,
+                    Price = p.Price,
+                    ProductStatus = p.ProductStatus
+                }).ToListAsync();
+            return products;
         }
         public async Task Delete(int id)
         {
