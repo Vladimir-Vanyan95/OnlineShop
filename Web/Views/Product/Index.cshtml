@@ -3,28 +3,28 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div style="padding-left:400px;" class="container">
-    <div class="row">
+<div class="container-fluid">
+    <div class="row mt-5 mb-2" style="margin-left:300px;">
         <div class="card-deck">
             @if (Model.Any())
              {
                 @foreach (var product in Model)
                  {
-                    <div class="card m-3" style="min-width: 18rem; max-width:30.5%;border:dotted 1px;background-color:gainsboro">
-                        <div class="card-header" style="margin:auto">
-                            <a asp-action="ProductView" asp-route-Id="@product.Id"><h3>@product.Name</h3></a>
+                    <div class="col-lg-4 product-div">
+                        <div class="card-header">
+                            <a asp-action="ProductView" asp-route-Id="@product.Id"><h3 style="margin:auto">@product.Name</h3></a>
                         </div>
                         <a asp-action="ProductView" asp-route-Id="@product.Id">
-                            <img  class="card-img-top imageThumbnail" src="/images/@product.Id/@product.MainImage"
+                            <img class="card-img-top imageThumbnail" src="/images/@product.Id/@product.MainImage"
                                  asp-append-version="true" />
                         </a>
                     </div>
                  }
-            }
-            else
-            {
+             }
+             else
+             {
                 <h2>Products not found</h2>
-            }
+             }
         </div>
     </div>
 </div>
