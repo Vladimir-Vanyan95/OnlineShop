@@ -1,30 +1,30 @@
-﻿@model List<ProductViewModel>
+﻿@model ICollection<ProductViewModel>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container-fluid">
-    <div class="row mt-5 mb-2" style="margin-left:300px;">
-        <div class="card-deck">
-            @if (Model.Any())
-             {
-                @foreach (var product in Model)
-                 {
-                    <div class="col-lg-4 product-div">
-                        <div class="card-header">
-                            <a asp-action="ProductView" asp-route-Id="@product.Id"><h3 style="margin:auto">@product.Name</h3></a>
-                        </div>
-                        <a asp-action="ProductView" asp-route-Id="@product.Id">
-                            <img class="card-img-top imageThumbnail" src="/images/@product.Id/@product.MainImage"
-                                 asp-append-version="true" />
-                        </a>
-                    </div>
-                 }
-             }
-             else
-             {
-                <h2>Products not found</h2>
-             }
-        </div>
+@if (Model.Any())
+{
+    <div class="product-parent">
+        @foreach (var product in Model)
+        {
+            <div class="product">
+                <h3>@product.Name</h3>
+                <a asp-action="ProductView" asp-route-Id="@product.Id">
+                    <img src="/images/@product.Id/@product.MainImage"
+                         asp-append-version="true" />
+                </a>
+                <span class="discount">- @product.Discount %</span>
+                <span class="@(product.Discount>0?"old-price":null)">@product.Price</span>
+                @if (product.Discount > 0)
+                {
+                    <span class="new-price"> @product.NewPrice ֏</span>
+                }
+            </div>
+        }
     </div>
-</div>
+}
+else
+{
+    <h3 style="color:crimson">Products not found</h3>
+}

@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -7,44 +6,42 @@
     <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="~/css/style.css" rel="stylesheet" />
 </head>
-    
+      
 <body class="main-Image">
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-        <a class="navbar-brand" href="#">Online Market</a>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#272727;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse nav-nav" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" style="padding-left:150px;">
                 <li class="nav-item">
-                    <a class="nav-link" asp-action="Index" asp-controller="Product"><h3>Home</h3><span class="sr-only">(current)</span></a>
+                    <a class="nav-link categories" asp-action="Index" asp-controller="Product"><h3>Home</h3></a>
                 </li>
                 @await Component.InvokeAsync("_Menu")
             </ul>
-
         </div>
 
         <div class="navbar navbar-expand-lg navbar-light collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 @if (!User.Identity.IsAuthenticated)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="Login" asp-controller="Account">Sign In</a>
+                    <li class="nav-item autenticate">
+                        <a class="nav-link"style="font-family: Verdana; color: silver;" asp-action="Login" asp-controller="Account">Sign In</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="Register" asp-controller="Account">Register</a>
+                    <li class="nav-item ">
+                        <a class="nav-link"style="font-family: Verdana; color: silver;" asp-action="Register" asp-controller="Account">Register</a>
                     </li>
                 }
                 else
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="SignOut" asp-controller="Account">Sign out</a>
+                    <li class="nav-item ">
+                        <a class="nav-link"style="font-family: Verdana; color: silver;" asp-action="SignOut" asp-controller="Account">Sign out</a>
                     </li>
                 }
             </ul>
         </div>
     </nav>
-    <div>
+    <div class="content">
         @RenderBody()
     </div>
     <script src="~/js/site.js"></script>

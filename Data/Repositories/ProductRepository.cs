@@ -28,7 +28,9 @@ namespace Data.Repositories
                 Discount = productAdd.Discount,
                 CategoryId = productAdd.CategoryId,
                 MainImage = productAdd.MainImage,
-                ProductStatus = productAdd.ProductStatus
+                ProductStatus = productAdd.ProductStatus,
+                CreatedDate = DateTime.Now
+
             };
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -50,9 +52,9 @@ namespace Data.Repositories
                 }).ToListAsync();
             return products;
         }
-        public async Task Delete(int id)
+        public async Task Delete(int Id)
         {
-            Product product = await _context.Products.Where(p => p.Id == id).FirstOrDefaultAsync();
+            Product product = await _context.Products.Where(p => p.Id == Id).FirstOrDefaultAsync();
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
@@ -66,7 +68,8 @@ namespace Data.Repositories
                 Discount = p.Discount,
                 MainImage = p.MainImage,
                 Price = p.Price,
-                ProductStatus = p.ProductStatus
+                ProductStatus = p.ProductStatus,
+                
             }).FirstOrDefaultAsync();
         }
         public async Task AddImages(List<ProductImageViewModel> imageModel)
@@ -88,6 +91,7 @@ namespace Data.Repositories
             product.Discount = model.Discount;
             product.MainImage = model.MainImage;
             product.Price = model.Price;
+            product.UpdatedDate = DateTime.Now;
             await _context.SaveChangesAsync();
         }
         public async Task<ProductViewModel> FindById(int Id)

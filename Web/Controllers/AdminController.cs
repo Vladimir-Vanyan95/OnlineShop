@@ -43,7 +43,6 @@ namespace Web.Controllers
             var products = await _productRepository.GetAll(null);
             return View(products);
         }
-
         [HttpGet]
         public async Task<IActionResult> ProductAdd()
         {

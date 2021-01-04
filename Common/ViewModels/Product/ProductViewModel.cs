@@ -11,6 +11,7 @@ namespace Common.ViewModels
         public string Name { get; set; }
         public double Price { get; set; }
         public double? Discount { get; set; }
+        public int NewPrice =>(int)Price-(int)Discount * ((int)Price / 100);
         public string MainImage { get; set; }
         public ProductStatus ProductStatus { get; set; }
         public int CategoryId { get; set; }

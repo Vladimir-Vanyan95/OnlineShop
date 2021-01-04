@@ -1,10 +1,8 @@
 ﻿@model ICollection<CategoryViewModel>
 
-
 @foreach (var item in Model)
 {
-    <li class="nav-item"><a style="margin:0 50px;" class="nav-link"
+    <li class="nav-item"><a class="nav-link categories"
      asp-controller="Product" asp-action="Index" asp-route-categoryId="@item.Id"><h3>@item.Name</h3></a></li>
     
 }
-    
