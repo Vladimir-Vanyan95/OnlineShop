@@ -11,7 +11,7 @@ namespace Web.Controllers
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
-        public ProductController(IProductRepository productRepository,ICategoryRepository categoryRepository)
+        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
@@ -20,6 +20,11 @@ namespace Web.Controllers
         {
             var products = await _productRepository.GetAll(categoryId);
             return View(products);
+        }
+        public async Task<IActionResult> ProductView(int Id)
+        {
+            var product = await _productRepository.FindById(Id);
+            return View(product);
         }
     }
 }

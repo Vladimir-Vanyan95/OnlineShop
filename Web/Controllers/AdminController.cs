@@ -53,7 +53,6 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ProductAdd(ProductAddViewModel productAdd, List<IFormFile> ImageFile)
         {
-            
             productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
             if (ModelState.IsValid)
             {
