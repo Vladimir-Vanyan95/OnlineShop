@@ -1,0 +1,23 @@
+﻿@{ 
+    Layout= "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model ProductVariantViewModel
+<div class="p-3">
+    <form method="post">
+        <div>
+            <input type="hidden" asp-for="ProductId" />
+            <select asp-for="VariantId">
+                <option value="0">Select Variant</option>
+                @foreach (var item in ViewBag.variants)
+                {
+                    <option value="@item.Id">
+                        @item.Name
+                    </option>
+                }
+
+            </select>
+            <input asp-for="Value" type="text" placeholder="Variant Value" />
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</div>

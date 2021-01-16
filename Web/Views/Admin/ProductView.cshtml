@@ -9,14 +9,16 @@
     <div>
         <div class="form-group form-check; p-5">
             <img style="height:auto; width:500px;" src="~/images/@Model.Id/@Model.MainImage" />
-            <div style="padding-left:150px; ">
-                <h2>@Model.Name</h2>
-            </div>
-            <div style="padding-left:150px;">
-                <h3>Price-@Model.Price</h3>
-            </div>
-            <div style="padding-left:150px;">
-                <h3>Discount-@Model.Discount</h3>
+            <div class="pl-5 pt-3">
+                <p>
+                    <h2>Name: @Model.Name</h2>
+                    <h4>Price: @Model.Price</h4>
+                    <h4>Discount: @Model.Discount</h4>
+                    @foreach (var item in Model.VariantModels)
+                    {
+                        <h4>@item.VariantName:  @item.Value</h4>
+                    }
+                </p>
             </div>
         </div>
     </div>

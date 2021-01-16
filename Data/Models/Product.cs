@@ -17,11 +17,11 @@ namespace Data.Models
         public int CategoryId { get; set; }
         public string MainImage { get; set; }
         public ProductStatus ProductStatus { get; set; }
+        public ICollection<ProductImage> ProductImages { get; set; }
+        public ICollection<ProductVariant> ProductVariants { get; set; }
         public Category Category { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public bool IsDeleted { get; set; }
-        public ICollection<ProductImage> ProductImages { get; set; }
-        public ICollection<CartProduct> CartProducts { get; set; }
     }
 }

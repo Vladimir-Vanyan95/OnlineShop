@@ -1,14 +1,19 @@
-﻿@model ProductViewModel 
+﻿@model ProductViewModel
 @{
     ViewData["Title"] = "ProductView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container-fluid" style="background-color:white; border:solid 1px;">
+<div class="container-fluid" style="background-color:white; border:solid 1px; border-radius:5px;border-color:darkgrey">
     <div class="row pt-4">
-        <div class="col-sm-7"><img style="width:550px;height:450px;" src="~/images/@Model.Id/@Model.MainImage"/></div>
+        <div class="col-sm-7"><img style="width:550px;height:450px;" src="~/images/@Model.Id/@Model.MainImage" /></div>
         <div class="col-sm-5 pt-2">
             <h2>@Model.Name</h2>
-            <h2></h2>
+            <span>Product Status: @Model.ProductStatus</span><br />
+            @foreach (var item in Model.VariantModels)
+            {
+                <span>@item.VariantName:  @item.Value</span><br />
+            }
+            <span>Sale Price &emsp;&emsp;<span style="font-size: 20px; color: brown;">@Model.Price ֏</span></span>
         </div>
     </div>
 </div>

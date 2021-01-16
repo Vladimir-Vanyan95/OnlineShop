@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model ICollection<VariantViewModel>
+<div class="container pt-3">
+    <div class="row">
+        <a asp-controller="Variant" asp-action="VariantAdd" class="btn btn-primary">Variant Add</a>
+    </div>
+    <div class="row pt-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Category Name</th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td><a asp-action="Categories" asp-route-Id="@item.Id" type="button" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

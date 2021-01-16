@@ -18,7 +18,6 @@ namespace Data.Repositories
         {
             _context = context;
         }
-
         public async Task<int> Add(ProductAddViewModel productAdd)
         {
             Product product = new Product
@@ -29,14 +28,12 @@ namespace Data.Repositories
                 CategoryId = productAdd.CategoryId,
                 MainImage = productAdd.MainImage,
                 ProductStatus = productAdd.ProductStatus,
-                CreatedDate = DateTime.Now
-
+                CreatedDate = DateTime.Now,
             };
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
             return product.Id;
         }
-
         public async Task<List<ProductViewModel>> GetAll(int? categoryId)
         {
             var products = await _context.Products.Where(p => (categoryId == null || p.CategoryId == categoryId)).Select
@@ -69,7 +66,7 @@ namespace Data.Repositories
                 MainImage = p.MainImage,
                 Price = p.Price,
                 ProductStatus = p.ProductStatus,
-                
+
             }).FirstOrDefaultAsync();
         }
         public async Task AddImages(List<ProductImageViewModel> imageModel)
@@ -96,7 +93,8 @@ namespace Data.Repositories
         }
         public async Task<ProductViewModel> FindById(int Id)
         {
-            return await _context.Products.Where(p => p.Id == Id).Select(p => new ProductViewModel
+           
+            var model = await _context.Products.Where(p => p.Id == Id).Select(p => new ProductViewModel
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -104,8 +102,27 @@ namespace Data.Repositories
                 Discount = p.Discount,
                 CategoryId = p.CategoryId,
                 MainImage = p.MainImage,
-                ProductStatus = p.ProductStatus
+                ProductStatus = p.ProductStatus,
             }).FirstOrDefaultAsync();
+            model.VariantModels = await _context.ProductVariants.Where(v => v.ProductId == Id).Select(v => new ProductVariantViewModel
+            {
+                Id = v.Id,
+                Price = v.Price,
+                Value = v.Value,
+                ProductId = v.ProductId,
+                VariantId = v.VariantId,
+            }).ToListAsync();
+            VariantViewModel variantModel = new VariantViewModel();
+            foreach (var item in model.VariantModels)
+            {
+                variantModel =await _context.Variants.Where(v => v.Id == item.VariantId).Select(v => new VariantViewModel
+                {
+                    Name = v.Name
+                }).FirstOrDefaultAsync();
+                item.VariantName = variantModel.Name;
+            }
+            return model;
         }
+       
     }
 }

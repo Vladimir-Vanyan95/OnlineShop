@@ -18,15 +18,13 @@ namespace Web.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment hostEnvironment)
+        private readonly IVariantRepository _variantRepository;
+        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment hostEnvironment,IVariantRepository variantRepository)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _webHostEnvironment = hostEnvironment;
-        }
-        public IActionResult Index()
-        {
-            return View();
+            _variantRepository = variantRepository;
         }
         public async Task<IActionResult> Edit(int Id)
         {
@@ -43,10 +41,12 @@ namespace Web.Controllers
             var products = await _productRepository.GetAll(null);
             return View(products);
         }
+
         [HttpGet]
         public async Task<IActionResult> ProductAdd()
         {
             ViewBag.categories = await _categoryRepository.GetAll();
+            ViewBag.variants = await _variantRepository.GetVariants();
             ProductAddViewModel model = new ProductAddViewModel();
             return View(model);
         }
@@ -56,24 +56,24 @@ namespace Web.Controllers
             productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
             if (ModelState.IsValid)
             {
-                int Id = 0;
+                int ProdcutId = 0;
                 if (productAdd.Id > 0)
                 {
-                    Id = productAdd.Id;
+                    ProdcutId = productAdd.Id;
                     await _productRepository.Update(productAdd);
                 }
-                else { Id = await _productRepository.Add(productAdd); }
+                else { ProdcutId = await _productRepository.Add(productAdd); }
                 if (ImageFile != null)
                 {
                     List<ProductImageViewModel> images = new List<ProductImageViewModel>();
-                    var folderPath = _webHostEnvironment.WebRootPath + $"/images/{Id}";
+                    var folderPath = _webHostEnvironment.WebRootPath + $"/images/{ProdcutId}";
                     if (!Directory.Exists(folderPath))
                     {
                         Directory.CreateDirectory(folderPath);
                     }
                     foreach (var item in ImageFile)
                     {
-                        var savePath = _webHostEnvironment.WebRootPath + $"/images/{Id}/{item.FileName}";
+                        var savePath = _webHostEnvironment.WebRootPath + $"/images/{ProdcutId}/{item.FileName}";
                         using (var stream = new FileStream(savePath, FileMode.Create))
                         {
                             item.CopyTo(stream);
@@ -81,12 +81,12 @@ namespace Web.Controllers
                         images.Add(new ProductImageViewModel
                         {
                             FileName = item.FileName,
-                            ProductId = Id
+                            ProductId = ProdcutId
                         });
                     }
                     await _productRepository.AddImages(images);
                 }
-                return RedirectToAction("Product");
+                return RedirectToAction("VariantAdd", new { Id = ProdcutId });
             }
             return View(productAdd);
         }
@@ -95,29 +95,6 @@ namespace Web.Controllers
             var product = await _productRepository.FindById(Id);
             return View(product);
         }
-        public async Task<IActionResult> Category(int? Id = null)
-        {
-            if (Id != null)
-            {
-                await _categoryRepository.Delete(Id);
-            }
-            var categories = await _categoryRepository.GetAll();
-            return View(categories);
-        }
-        [HttpGet]
-        public IActionResult CategoryAdd()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> CategoryAdd(CategoryAddViewModel categoryAdd)
-        {
-            if (ModelState.IsValid)
-            {
-                await _categoryRepository.Add(categoryAdd);
-                return RedirectToAction("Category");
-            }
-            return View();
-        }
+        
     }
 }

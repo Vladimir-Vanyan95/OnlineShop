@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div class="container pt-3">
-    <form method="post" asp-controller="Admin" asp-action="CategoryAdd">
+    <form method="post" asp-controller="Category" asp-action="CategoryAdd">
         <div class="validation form-group">
             <input type="text" asp-for="Name" placeholder="Input Name" />
             <span asp-validation-for="Name"></span>
