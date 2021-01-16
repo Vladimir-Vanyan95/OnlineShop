@@ -19,9 +19,16 @@ namespace Web.Controllers
             _productRepository = productRepository;
             _variantRepository = variantRepository;
         }
-        public async Task<IActionResult> VariantAdd()
+        [HttpGet]
+        public IActionResult VariantAdd()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> VariantAdd(VariantViewModel model)
+        {
+            await _variantRepository.VariantAdd(model);
+            return RedirectToAction("VariantView");
         }
         public async Task<IActionResult> VariantView()
         {

@@ -39,7 +39,7 @@ namespace Web.Controllers
                     await Authenticate(user); // аутентификация
                     if (user.Role.Name == "admin")
                     {
-                        return RedirectToAction("Index", "Admin");
+                        return RedirectToAction("Product", "Admin");
                     }
                     return RedirectToAction("Index", "Home");
                 }
@@ -52,7 +52,7 @@ namespace Web.Controllers
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Product");
         }
         private async Task Authenticate(User user)
         {

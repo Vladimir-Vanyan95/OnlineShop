@@ -18,6 +18,8 @@ namespace Web.ViewComponents.Menu
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var model =await _categoryRepository.GetAll();
+            if (model.Count > 4) { model.RemoveAt(3); }
+            
             return View(model);
         }
     }

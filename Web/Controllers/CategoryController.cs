@@ -36,7 +36,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 await _categoryRepository.Add(categoryAdd);
-                return RedirectToAction("Category");
+                return RedirectToAction("Categories");
             }
             return View();
         }

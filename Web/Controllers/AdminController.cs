@@ -46,13 +46,13 @@ namespace Web.Controllers
         public async Task<IActionResult> ProductAdd()
         {
             ViewBag.categories = await _categoryRepository.GetAll();
-            ViewBag.variants = await _variantRepository.GetVariants();
             ProductAddViewModel model = new ProductAddViewModel();
             return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> ProductAdd(ProductAddViewModel productAdd, List<IFormFile> ImageFile)
         {
+            ViewBag.categories = await _categoryRepository.GetAll();
             productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
             if (ModelState.IsValid)
             {
@@ -86,7 +86,8 @@ namespace Web.Controllers
                     }
                     await _productRepository.AddImages(images);
                 }
-                return RedirectToAction("VariantAdd", new { Id = ProdcutId });
+                
+                return RedirectToAction("VariantAdd","Variant", new { Id = ProdcutId });
             }
             return View(productAdd);
         }
