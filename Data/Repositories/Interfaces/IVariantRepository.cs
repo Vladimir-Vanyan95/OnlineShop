@@ -11,5 +11,6 @@ namespace Data.Repositories.Interfaces
         Task<List<VariantViewModel>> GetVariants();
         Task ProductVariantAdd(ProductVariantViewModel model);
         Task VariantAdd(VariantViewModel model);
+        
     }
 }

@@ -46,8 +46,12 @@ namespace Web.Controllers
         public async Task<IActionResult> ProductVariantAdd(ProductVariantViewModel model)
         {
             ViewBag.variants = await _variantRepository.GetVariants();
-            await _variantRepository.ProductVariantAdd(model);
-            return View();
+            if (ModelState.IsValid)
+            {
+                await _variantRepository.ProductVariantAdd(model);
+                model.Value = null;
+            }
+            return View(model);
         }
     }
 }

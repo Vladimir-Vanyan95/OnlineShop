@@ -28,17 +28,31 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult CategoryAdd()
         {
-            return View();
+            CategoryAddViewModel model = new CategoryAddViewModel();
+            return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> CategoryAdd(CategoryAddViewModel categoryAdd)
+        public async Task<IActionResult> CategoryAdd(CategoryAddViewModel model)
         {
             if (ModelState.IsValid)
             {
-                await _categoryRepository.Add(categoryAdd);
+                if (model.Id > 0)
+                {
+                    await _categoryRepository.Update(model);
+                }
+                else
+                {
+                    await _categoryRepository.Add(model);
+                }
                 return RedirectToAction("Categories");
             }
             return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> CategoryEdit(int Id)
+        {
+            var model= await _categoryRepository.FindById(Id);
+            return View("CategoryAdd", model);
         }
     }
 }

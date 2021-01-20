@@ -22,12 +22,28 @@ namespace Data.Repositories
         {
             Category category = new Category
             {
-                Name = categoryViewModel.Name
+                Name = categoryViewModel.Name,
+                CreatedDate=DateTime.Now
             };
             await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
         }
-
+        public async Task<CategoryAddViewModel>FindById(int Id)
+        {
+            return await _context.Categories.Where(c => c.Id == Id).Select(c => new CategoryAddViewModel
+            {
+                Id = c.Id,
+                Name = c.Name
+            }).FirstOrDefaultAsync();
+        }
+        public async Task Update(CategoryAddViewModel model)
+        {
+            var category = await _context.Categories.Where(c => c.Id == model.Id).FirstOrDefaultAsync();
+            category.Id = model.Id;
+            category.Name = model.Name;
+            category.UpdatedDate = DateTime.Now;
+            await _context.SaveChangesAsync();
+        }
         public async Task Delete(int? categoryId = null)
         {
             Category category = await _context.Categories.Where(c => c.Id == categoryId).FirstOrDefaultAsync();

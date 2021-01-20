@@ -93,7 +93,6 @@ namespace Data.Repositories
         }
         public async Task<ProductViewModel> FindById(int Id)
         {
-           
             var model = await _context.Products.Where(p => p.Id == Id).Select(p => new ProductViewModel
             {
                 Id = p.Id,
@@ -107,7 +106,6 @@ namespace Data.Repositories
             model.VariantModels = await _context.ProductVariants.Where(v => v.ProductId == Id).Select(v => new ProductVariantViewModel
             {
                 Id = v.Id,
-                Price = v.Price,
                 Value = v.Value,
                 ProductId = v.ProductId,
                 VariantId = v.VariantId,
@@ -123,6 +121,5 @@ namespace Data.Repositories
             }
             return model;
         }
-       
     }
 }

@@ -11,7 +11,6 @@ namespace Data.Models
         public int Id { get; set; }
         public int VariantId { get; set; }
         public int ProductId { get; set; }
-        public double? Price { get; set; }
         public string Value { get; set; }
         [ForeignKey("VariantId")]
         public Variant Variant { get; set; }

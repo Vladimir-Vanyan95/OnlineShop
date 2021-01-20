@@ -2,15 +2,21 @@
 @{
     ViewData["Title"] = "CategoryAdd";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var buttonText = "Add";
+    @if (Model.Id > 0)
+    {
+        buttonText = "Edit";
+    }
 }
 <div class="container pt-3">
     <form method="post" asp-controller="Category" asp-action="CategoryAdd">
+        <input type="hidden" asp-for="Id" />
         <div class="validation form-group">
             <input type="text" asp-for="Name" placeholder="Input Name" />
             <span asp-validation-for="Name"></span>
         </div>
         <div>
-            <button type="submit" class="btn btn-success">Add</button>
+            <button type="submit" class="btn btn-success">@buttonText</button>
         </div>
     </form>
 </div>

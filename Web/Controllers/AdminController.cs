@@ -87,7 +87,7 @@ namespace Web.Controllers
                     await _productRepository.AddImages(images);
                 }
                 
-                return RedirectToAction("VariantAdd","Variant", new { Id = ProdcutId });
+                return RedirectToAction("ProductVariantAdd","Variant", new { Id = ProdcutId });
             }
             return View(productAdd);
         }
