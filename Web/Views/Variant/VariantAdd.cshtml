@@ -4,8 +4,11 @@
 @model VariantViewModel
 <div class="pt-3">
     <form asp-action="VariantAdd" method="post">
-        <label asp-for="Name">Input Variant </label>
-        <input asp-for="Name" type="text"/><br />
-        <button type="submit" class="btn btn-success">Add</button>
+        <div>
+            <input asp-for="Name" placeholder="Input Variant" type="text" /><br />
+        </div>
+        <div class="pt-2">
+            <button type="submit" class="btn btn-success">Add</button>
+        </div>
     </form>
 </div>

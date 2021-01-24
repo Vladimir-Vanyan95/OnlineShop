@@ -19,12 +19,14 @@ namespace Web.Controllers
         private readonly IProductRepository _productRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IVariantRepository _variantRepository;
-        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment hostEnvironment,IVariantRepository variantRepository)
+        private readonly IVendorRepository _vendorRepository;
+        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment hostEnvironment,IVariantRepository variantRepository,IVendorRepository vendorRepository)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _webHostEnvironment = hostEnvironment;
             _variantRepository = variantRepository;
+            _vendorRepository = vendorRepository;
         }
         public async Task<IActionResult> Edit(int Id)
         {
@@ -46,6 +48,7 @@ namespace Web.Controllers
         public async Task<IActionResult> ProductAdd()
         {
             ViewBag.categories = await _categoryRepository.GetAll();
+            ViewBag.vendors = await _vendorRepository.GetAll();
             ProductAddViewModel model = new ProductAddViewModel();
             return View(model);
         }
@@ -53,6 +56,7 @@ namespace Web.Controllers
         public async Task<IActionResult> ProductAdd(ProductAddViewModel productAdd, List<IFormFile> ImageFile)
         {
             ViewBag.categories = await _categoryRepository.GetAll();
+            ViewBag.vendors = await _vendorRepository.GetAll();
             productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
             if (ModelState.IsValid)
             {

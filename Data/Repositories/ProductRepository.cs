@@ -66,6 +66,7 @@ namespace Data.Repositories
                 MainImage = p.MainImage,
                 Price = p.Price,
                 ProductStatus = p.ProductStatus,
+                VendorId=p.VendorId
 
             }).FirstOrDefaultAsync();
         }
@@ -89,6 +90,7 @@ namespace Data.Repositories
             product.MainImage = model.MainImage;
             product.Price = model.Price;
             product.UpdatedDate = DateTime.Now;
+            product.VendorId = model.VendorId;
             await _context.SaveChangesAsync();
         }
         public async Task<ProductViewModel> FindById(int Id)

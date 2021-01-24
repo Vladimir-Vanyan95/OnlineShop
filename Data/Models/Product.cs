@@ -13,13 +13,17 @@ namespace Data.Models
         public string Name { get; set; }
         public double Price { get; set; }
         public double Discount { get; set; }
-        [ForeignKey("CategoryId")]
         public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
+        public int VendorId { get; set; }
+        [ForeignKey("VendorId")]
+        public Vendor Vendor { get; set; }
         public string MainImage { get; set; }
         public ProductStatus ProductStatus { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }
         public ICollection<ProductVariant> ProductVariants { get; set; }
-        public Category Category { get; set; }
+
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public bool IsDeleted { get; set; }

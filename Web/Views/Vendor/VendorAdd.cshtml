@@ -1,0 +1,21 @@
+﻿@model VendorAddViewModel
+@{
+    ViewData["Title"] = "VendorAdd";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container pt-3">
+    <form method="post" asp-action="VendorAdd" enctype="multipart/form-data">
+        <div>
+            <input asp-for="Name" type="text"  placeholder="Input Name"/>
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="pt-2">
+            <label>Add Image</label><br />
+            <input required class="btn btn-secondary" name="fileImage" asp-for="Image" type="file" />
+        </div>
+        <div class="pt-2">
+            <button class="btn btn-success" type="submit">Add</button>
+        </div>
+    </form>
+</div>
+

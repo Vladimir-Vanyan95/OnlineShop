@@ -15,7 +15,7 @@
         </div>
         <div class="form-group form-check">
             <label>Input Name</label><br />
-            <input asp-for="Name" type="text"/>
+            <input asp-for="Name" type="text" />
             <span asp-validation-for="Name"></span>
         </div>
         <div class="form-group form-check">
@@ -37,11 +37,22 @@
                 <option class="dropdown-item" selected="selected" value="">Select Prodcut Status</option>
             </select>
         </div>
+
         <div class="form-group form-check dropdown">
             <span asp-validation-for="CategoryId"></span>
             <select class="dropdown-header" asp-for="CategoryId">
                 <option value="0">Select Category</option>
                 @foreach (var item in ViewBag.Categories)
+                {
+                    <option class="dropdown-item" value="@item.Id">@item.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group form-check dropdown">
+            <span asp-validation-for="VendorId"></span>
+            <select class="dropdown-header" asp-for="VendorId">
+                <option value="0">Select Vendor</option>
+                @foreach (var item in ViewBag.vendors)
                 {
                     <option class="dropdown-item" value="@item.Id">@item.Name</option>
                 }

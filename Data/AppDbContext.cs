@@ -19,6 +19,7 @@ namespace Data
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<Variant> Variants { get; set; }
+        public DbSet<Vendor> Vendors { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             string adminRoleName = "admin";

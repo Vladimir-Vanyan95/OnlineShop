@@ -1,0 +1,31 @@
+﻿@model ICollection<VendorViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container pt-3">
+    <div class="row pl-3">
+        <a asp-controller="Vendor" asp-action="VendorAdd" class="btn btn-primary">Vendor Add</a>
+    </div>
+    <div class="form-group">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Vendor Name</th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td><img height="150" width="200" src="~/images/VendorImg/@item.Image" /></td>
+                        <td style="width: 20px;"><a asp-action="CategoryEdit" asp-route-Id="@item.Id" class="btn bg-primary">Edit</a></td>
+                        <td><a asp-action="VendorView" asp-route-Id="@item.Id" type="button" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
