@@ -16,5 +16,6 @@ namespace Common.ViewModels
         public List<ProductVariantViewModel> VariantModels { get; set; }
         public ProductStatus ProductStatus { get; set; }
         public int CategoryId { get; set; }
+        public int VendorId { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace Data.Repositories
                 CategoryId = productAdd.CategoryId,
                 MainImage = productAdd.MainImage,
                 ProductStatus = productAdd.ProductStatus,
+                VendorId=productAdd.VendorId,
                 CreatedDate = DateTime.Now,
             };
             await _context.Products.AddAsync(product);
@@ -45,6 +46,7 @@ namespace Data.Repositories
                     Discount = p.Discount,
                     MainImage = p.MainImage,
                     Price = p.Price,
+                    VendorId=p.VendorId,
                     ProductStatus = p.ProductStatus
                 }).ToListAsync();
             return products;
@@ -104,6 +106,7 @@ namespace Data.Repositories
                 CategoryId = p.CategoryId,
                 MainImage = p.MainImage,
                 ProductStatus = p.ProductStatus,
+                VendorId=p.VendorId
             }).FirstOrDefaultAsync();
             model.VariantModels = await _context.ProductVariants.Where(v => v.ProductId == Id).Select(v => new ProductVariantViewModel
             {
