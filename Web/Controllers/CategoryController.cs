@@ -16,12 +16,8 @@ namespace Web.Controllers
         {
             _categoryRepository = categoryRepository;
         }
-        public async Task<IActionResult> Categories(int? Id = null)
+        public async Task<IActionResult> Categories()
         {
-            if (Id != null)
-            {
-                await _categoryRepository.Delete(Id);
-            }
             var categories = await _categoryRepository.GetAll();
             return View(categories);
         }

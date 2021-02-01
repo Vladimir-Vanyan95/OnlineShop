@@ -35,7 +35,7 @@ namespace Data.Repositories
             await _context.SaveChangesAsync();
             return product.Id;
         }
-        public async Task<List<ProductViewModel>> GetAll(int? categoryId)
+        public async Task<List<ProductViewModel>> GetAll(int? categoryId/*,int?vendorId*/)
         {
             var products = await _context.Products.Where(p => (categoryId == null || p.CategoryId == categoryId)).Select
                 (p => new ProductViewModel

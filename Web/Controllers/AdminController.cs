@@ -30,7 +30,8 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> Edit(int Id)
         {
-            ViewBag.Categories = await _categoryRepository.GetAll();
+            ViewBag.categories = await _categoryRepository.GetAll();
+            ViewBag.vendors = await _vendorRepository.GetAll();
             var model = await _productRepository.Edit(Id);
             return View("ProductAdd", model);
         }
@@ -57,7 +58,10 @@ namespace Web.Controllers
         {
             ViewBag.categories = await _categoryRepository.GetAll();
             ViewBag.vendors = await _vendorRepository.GetAll();
-            productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
+            if (ImageFile.Any())
+            {
+                productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
+            }
             if (ModelState.IsValid)
             {
                 int ProdcutId = 0;

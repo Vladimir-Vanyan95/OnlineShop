@@ -1,0 +1,26 @@
+﻿@model List<CategoryViewModel>
+
+<li class="nav-item">
+    <a class="nav-link categories"
+       asp-controller="Product" asp-action="Index" asp-route-categoryId="@Model[0].Id"><h3> <i class="fas fa-mobile-alt"></i> @Model[0].Name</h3></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link categories"
+       asp-controller="Product" asp-action="Index" asp-route-categoryId="@Model[1].Id"><h3><i class="fas fa-laptop"></i> @Model[1].Name</h3></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link categories"
+       asp-controller="Product" asp-action="Index" asp-route-categoryId="@Model[2].Id"><h3><i class="fas fa-tv"></i> @Model[2].Name</h3></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link categories"
+       asp-controller="Product" asp-action="Index" asp-route-categoryId="@Model[3].Id"><h3><i class="fas fa-clock"></i> @Model[3].Name</h3></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link categories"
+       asp-controller="Product" asp-action="Index" asp-route-categoryId="@Model[4].Id"><h3><i class="fas fa-camera"></i> @Model[4].Name</h3></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link categories"
+       asp-controller="Product" asp-action="Index" asp-route-categoryId="@Model[5].Id"><h3><i class="fas fa-gamepad"></i> @Model[5].Name</h3></a>
+</li>

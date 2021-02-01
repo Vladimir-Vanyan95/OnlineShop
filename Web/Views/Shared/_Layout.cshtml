@@ -58,13 +58,22 @@
         <div class="row">
             <div class="nav col-md-2">
                 <div class="nav-item dropdown pt-2">
-                    <button type="button" style="color: seashell; width: 210px; background-color: seagreen;" class="menu-buttons btn dropdown-toggle" data-toggle="dropdown">
-                        Categories
-                    </button>
-                    <div class="dropdown-menu" style="width:400px;">
-                        @await Component.InvokeAsync("_Menu")
+                    <div>
+                        <button type="button" style="color: seashell; width: 210px; background-color: seagreen;" class="menu-buttons btn dropdown-toggle" data-toggle="dropdown">
+                            Categories
+                        </button>
+                        <div class="dropdown-menu" style="width:400px;">
+                            @await Component.InvokeAsync("_Categories")
+                        </div>
                     </div>
-                    
+                    <div>
+                        <button type="button" style="color:seashell; width: 210px; background-color:seagreen;" class="menu-buttons btn dropdown-toggle mt-2" data-toggle="dropdown">
+                            Vendors
+                        </button>
+                        <div class="dropdown-menu" style="width:400px;">
+                            @await Component.InvokeAsync("_Vendors")
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-9 pl-3">

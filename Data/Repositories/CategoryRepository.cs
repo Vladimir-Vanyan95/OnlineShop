@@ -44,14 +44,7 @@ namespace Data.Repositories
             category.UpdatedDate = DateTime.Now;
             await _context.SaveChangesAsync();
         }
-        public async Task Delete(int? categoryId = null)
-        {
-            Category category = await _context.Categories.Where(c => c.Id == categoryId).FirstOrDefaultAsync();
-            _context.Categories.Remove(category);
-            var products = await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
-            _context.Products.RemoveRange(products);
-            await _context.SaveChangesAsync();
-        }
+       
         public async Task<List<CategoryViewModel>> GetAll()
         {
             return await _context.Categories.Select(c => new CategoryViewModel

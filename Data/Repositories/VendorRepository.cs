@@ -18,7 +18,6 @@ namespace Data.Repositories
         {
             _context = context;
         }
-        
         public async Task<List<VendorViewModel>> GetAll()
         {
             return await _context.Vendors.Select(v => new VendorViewModel

@@ -1,0 +1,9 @@
+﻿@model ICollection<VendorViewModel>
+@foreach (var item in Model)
+{
+    <li class="nav-item">
+        <a asp-controller="Vendor" class="nav-link">
+            <h3><img class="vendor-icon" src="~/images/VendorImg/@item.Image" /> @item.Name</h3> 
+        </a>
+    </li>
+}
