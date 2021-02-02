@@ -35,13 +35,13 @@ namespace Web.Controllers
             var model = await _productRepository.Edit(Id);
             return View("ProductAdd", model);
         }
-        public async Task<IActionResult> Product(int Id = 0)
+        public async Task<IActionResult> Product(int? Id )
         {
-            if (Id > 0)
+            if (Id !=null)
             {
                 await _productRepository.Delete(Id);
             }
-            var products = await _productRepository.GetAll(null);
+            var products = await _productRepository.GetAll(null,null);
             return View(products);
         }
 

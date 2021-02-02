@@ -16,9 +16,9 @@ namespace Web.Controllers
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
         }
-        public async Task<IActionResult> Index(int? categoryId)
+        public async Task<IActionResult> Index(int? categoryId,int?vendorId)
         {
-            var products = await _productRepository.GetAll(categoryId);
+            var products = await _productRepository.GetAll(categoryId,vendorId);
             return View(products);
         }
         public async Task<IActionResult> ProductView(int Id)

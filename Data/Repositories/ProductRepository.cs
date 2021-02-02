@@ -28,16 +28,16 @@ namespace Data.Repositories
                 CategoryId = productAdd.CategoryId,
                 MainImage = productAdd.MainImage,
                 ProductStatus = productAdd.ProductStatus,
-                VendorId=productAdd.VendorId,
+                VendorId = productAdd.VendorId,
                 CreatedDate = DateTime.Now,
             };
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
             return product.Id;
         }
-        public async Task<List<ProductViewModel>> GetAll(int? categoryId/*,int?vendorId*/)
+        public async Task<List<ProductViewModel>> GetAll(int? categoryId, int? vendorId)
         {
-            var products = await _context.Products.Where(p => (categoryId == null || p.CategoryId == categoryId)).Select
+            var products = await _context.Products.Where(p => ((categoryId == null || p.CategoryId == categoryId) && (vendorId == null || p.VendorId == vendorId))).Select
                 (p => new ProductViewModel
                 {
                     Id = p.Id,
@@ -46,12 +46,12 @@ namespace Data.Repositories
                     Discount = p.Discount,
                     MainImage = p.MainImage,
                     Price = p.Price,
-                    VendorId=p.VendorId,
+                    VendorId = p.VendorId,
                     ProductStatus = p.ProductStatus
                 }).ToListAsync();
             return products;
         }
-        public async Task Delete(int Id)
+        public async Task Delete(int? Id)
         {
             Product product = await _context.Products.Where(p => p.Id == Id).FirstOrDefaultAsync();
             _context.Products.Remove(product);
@@ -68,7 +68,7 @@ namespace Data.Repositories
                 MainImage = p.MainImage,
                 Price = p.Price,
                 ProductStatus = p.ProductStatus,
-                VendorId=p.VendorId
+                VendorId = p.VendorId
 
             }).FirstOrDefaultAsync();
         }
@@ -106,7 +106,7 @@ namespace Data.Repositories
                 CategoryId = p.CategoryId,
                 MainImage = p.MainImage,
                 ProductStatus = p.ProductStatus,
-                VendorId=p.VendorId
+                VendorId = p.VendorId
             }).FirstOrDefaultAsync();
             model.VariantModels = await _context.ProductVariants.Where(v => v.ProductId == Id).Select(v => new ProductVariantViewModel
             {
@@ -118,7 +118,7 @@ namespace Data.Repositories
             VariantViewModel variantModel = new VariantViewModel();
             foreach (var item in model.VariantModels)
             {
-                variantModel =await _context.Variants.Where(v => v.Id == item.VariantId).Select(v => new VariantViewModel
+                variantModel = await _context.Variants.Where(v => v.Id == item.VariantId).Select(v => new VariantViewModel
                 {
                     Name = v.Name
                 }).FirstOrDefaultAsync();

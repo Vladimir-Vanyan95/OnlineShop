@@ -2,7 +2,7 @@
 @foreach (var item in Model)
 {
     <li class="nav-item">
-        <a asp-controller="Vendor" class="nav-link">
+        <a asp-controller="Product" asp-action="Index" asp-route-vendorId="@item.Id" class="nav-link">
             <h3><img class="vendor-icon" src="~/images/VendorImg/@item.Image" /> @item.Name</h3> 
         </a>
     </li>
