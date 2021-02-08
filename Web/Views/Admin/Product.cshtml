@@ -25,7 +25,7 @@
                         </div>
                         <div class="card-footer text-center">
                             <a asp-action="Edit" asp-route-Id="@product.Id" class="btn btn-primary m-1">Edit</a>
-                            <a class="btn btn-danger m-1" asp-route-Id="@product.Id">Delete</a>
+                            <a class="btn btn-danger m-1"asp-action="ProductDelete" asp-route-Id="@product.Id">Delete</a>
                         </div>
                     </div>
                  }

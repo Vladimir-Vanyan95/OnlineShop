@@ -1,17 +1,72 @@
 ﻿@model List<CategoryViewModel>
 
-<li class="nav-item">
-    <a class="nav-link categories"
-       asp-controller="Product" asp-action="Index" asp-route-categoryId="@Model[0].Id"><h3> <i class="fas fa-mobile-alt"></i> @Model[0].Name</h3></a>
+<li  class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle categories" data-toggle="dropdown">
+        <h3><i class="fas fa-mobile-alt"></i> @Model[0].Name</h3>
+    </a>
+    <ul class="dropdown-menu">
+        @foreach (var item in Model[0].SubCategories)
+        {
+            <li>
+                <a class="btn btn-light" asp-controller="Product" asp-action="Index" asp-route-categoryId="@item.Id"><h4>@item.Name</h4></a>
+            </li>
+        }
+    </ul>
 </li>
-<li class="nav-item">
-    <a class="nav-link categories"
-       asp-controller="Product" asp-action="Index" asp-route-categoryId="@Model[1].Id"><h3><i class="fas fa-laptop"></i> @Model[1].Name</h3></a>
+<li class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle categories" data-toggle="dropdown">
+        <h3><i class="fas fa-laptop"></i> @Model[1].Name</h3>
+    </a>
+    <ul class="dropdown-menu">
+        @foreach (var item in Model[1].SubCategories)
+        {
+            <li>
+                <a class="btn btn-light" asp-controller="Product" asp-action="Index" asp-route-categoryId="@item.Id"><img style="width:50px;" src="~/images/Categories/@item.Image" /><h4>@item.Name</h4></a>
+            </li>
+        }
+
+    </ul>
 </li>
-<li class="nav-item">
-    <a class="nav-link categories"
-       asp-controller="Product" asp-action="Index" asp-route-categoryId="@Model[2].Id"><h3><i class="fas fa-tv"></i> @Model[2].Name</h3></a>
-</li><li class="nav-item">
-    <a class="nav-link categories"
-       asp-controller="Product" asp-action="Index" asp-route-categoryId="@Model[3].Id"><h3><i class="fas fa-clock"></i> @Model[3].Name</h3></a>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle categories" data-toggle="dropdown">
+        <h3><i class="fas fa-tv"></i> @Model[2].Name</h3>
+    </a>
+    <ul class="dropdown-menu">
+         @foreach (var item in Model[2].SubCategories)
+         {
+             <li>
+                 <a class="btn btn-light" asp-controller="Product" asp-action="Index"asp-route-CategoryId="@item.Id"><h4>@item.Name</h4></a>
+             </li>
+         }
+    </ul>
 </li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle categories"data-toggle="dropdown">
+        <h3><i class="fas fa-clock"></i> @Model[3].Name</h3>
+    </a>
+    <ul class="dropdown-menu">
+        @foreach (var item in Model[3].SubCategories)
+        {
+            <li>
+                <a class="btn btn-light"asp-controller="Product"asp-action="Index" asp-route-CategoryId="@item.Id"><h4>@item.Name</h4></a>
+            </li>
+        }
+    </ul>
+</li>
+<style>
+    .navbar .nav-item .dropdown-menu {
+        display: none;
+    }
+
+    .navbar .nav-item:hover .nav-link {
+        color: #fff;
+    }
+
+    .navbar .nav-item:hover .dropdown-menu {
+        display: block;
+    }
+
+    .navbar .nav-item .dropdown-menu {
+        margin-top: 0;
+    }
+</style>

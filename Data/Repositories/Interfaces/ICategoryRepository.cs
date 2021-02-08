@@ -12,5 +12,6 @@ namespace Data.Repositories.Interfaces
         Task<List<CategoryViewModel>> GetAll();
         Task<CategoryAddViewModel> FindById(int Id);
         Task Update(CategoryAddViewModel model);
+        Task SubcategoryAdd(CategoryAddViewModel model);
     }
 }

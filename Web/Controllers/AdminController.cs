@@ -20,7 +20,7 @@ namespace Web.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IVariantRepository _variantRepository;
         private readonly IVendorRepository _vendorRepository;
-        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment hostEnvironment,IVariantRepository variantRepository,IVendorRepository vendorRepository)
+        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment hostEnvironment, IVariantRepository variantRepository, IVendorRepository vendorRepository)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
@@ -30,34 +30,31 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> Edit(int Id)
         {
-            ViewBag.categories = await _categoryRepository.GetAll();
-            ViewBag.vendors = await _vendorRepository.GetAll();
+            await CallViewBags();
             var model = await _productRepository.Edit(Id);
             return View("ProductAdd", model);
         }
-        public async Task<IActionResult> Product(int? Id )
+        public async Task<IActionResult> ProductDelete(int Id)
         {
-            if (Id !=null)
-            {
-                await _productRepository.Delete(Id);
-            }
-            var products = await _productRepository.GetAll(null,null);
+            await _productRepository.Delete(Id);
+            return RedirectToAction("Product");
+        }
+        public async Task<IActionResult> Product()
+        {
+            var products = await _productRepository.GetAll(null, null);
             return View(products);
         }
-
         [HttpGet]
         public async Task<IActionResult> ProductAdd()
         {
-            ViewBag.categories = await _categoryRepository.GetAll();
-            ViewBag.vendors = await _vendorRepository.GetAll();
+            await CallViewBags();
             ProductAddViewModel model = new ProductAddViewModel();
             return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> ProductAdd(ProductAddViewModel productAdd, List<IFormFile> ImageFile)
         {
-            ViewBag.categories = await _categoryRepository.GetAll();
-            ViewBag.vendors = await _vendorRepository.GetAll();
+
             if (ImageFile.Any())
             {
                 productAdd.MainImage = ImageFile.FirstOrDefault().FileName;
@@ -94,9 +91,11 @@ namespace Web.Controllers
                     }
                     await _productRepository.AddImages(images);
                 }
-                
-                return RedirectToAction("ProductVariantAdd","Variant", new { Id = ProdcutId });
+                await CallViewBags();
+                return RedirectToAction("ProductVariantAdd", "Variant", new { Id = ProdcutId });
             }
+            ViewBag.categories = await _categoryRepository.GetAll();
+            ViewBag.vendors = await _vendorRepository.GetAll();
             return View(productAdd);
         }
         public async Task<IActionResult> ProductView(int Id)
@@ -104,6 +103,10 @@ namespace Web.Controllers
             var product = await _productRepository.FindById(Id);
             return View(product);
         }
-        
+        public async Task CallViewBags()
+        {
+            ViewBag.categories = await _categoryRepository.GetAll();
+            ViewBag.vendors = await _vendorRepository.GetAll();
+        }
     }
 }

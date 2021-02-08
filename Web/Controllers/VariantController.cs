@@ -27,8 +27,12 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> VariantAdd(VariantViewModel model)
         {
-            await _variantRepository.VariantAdd(model);
-            return RedirectToAction("VariantView");
+            if (ModelState.IsValid)
+            {
+                await _variantRepository.VariantAdd(model);
+                return RedirectToAction("VariantView");
+            }
+            return View(model);
         }
         public async Task<IActionResult> VariantView()
         {

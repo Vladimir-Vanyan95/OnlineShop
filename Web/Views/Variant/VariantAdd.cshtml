@@ -6,6 +6,7 @@
     <form asp-action="VariantAdd" method="post">
         <div>
             <input asp-for="Name" placeholder="Input Variant" type="text" /><br />
+            <span asp-validation-for="Name"></span>
         </div>
         <div class="pt-2">
             <button type="submit" class="btn btn-success">Add</button>

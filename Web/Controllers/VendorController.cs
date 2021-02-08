@@ -43,7 +43,7 @@ namespace Web.Controllers
                 {
                     model.Image = fileImage.FileName;
                     await _vendorRepository.Add(model);
-                    var folderPath = _webHostEnvironment.WebRootPath + $"/images/VendorImg";
+                    var folderPath = _webHostEnvironment.WebRootPath + "/images/VendorImg";
                     if (!Directory.Exists(folderPath))
                     {
                         Directory.CreateDirectory(folderPath);
