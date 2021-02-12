@@ -16,6 +16,7 @@ namespace Common.ViewModels
         [Required(ErrorMessage = "Please input Discount")]
         public double Discount { get; set; }
         public string MainImage { get; set; }
+        public string CategoryName { get; set; }
         public ProductStatus  ProductStatus{ get; set; }
         [Required]
         public int VendorId { get; set; }

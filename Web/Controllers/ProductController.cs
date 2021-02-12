@@ -16,10 +16,19 @@ namespace Web.Controllers
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
         }
-        public async Task<IActionResult> Index(int? categoryId,int?vendorId)
+        public async Task<IActionResult> Index(int? categoryId, int? vendorId)
         {
-            var products = await _productRepository.GetAll(categoryId,vendorId);
+            var products = await _productRepository.GetAll(categoryId, vendorId);
             return View(products);
+        }
+        public async Task<IActionResult> Search(string searchString)
+        {
+            var products = await _productRepository.GetAll(null, null);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(p => p.Name.Contains(searchString)).ToList();
+            }
+            return View("Index", products);
         }
         public async Task<IActionResult> ProductView(int Id)
         {

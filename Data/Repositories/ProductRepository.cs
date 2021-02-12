@@ -20,6 +20,7 @@ namespace Data.Repositories
         }
         public async Task<int> Add(ProductAddViewModel productAdd)
         {
+            var category = await _context.Categories.Where(c => c.Id == productAdd.CategoryId).FirstOrDefaultAsync();
             Product product = new Product
             {
                 Name = productAdd.Name,
@@ -29,6 +30,7 @@ namespace Data.Repositories
                 MainImage = productAdd.MainImage,
                 ProductStatus = productAdd.ProductStatus,
                 VendorId = productAdd.VendorId,
+                CategoryName=category.Name,
                 CreatedDate = DateTime.Now,
             };
             await _context.Products.AddAsync(product);
@@ -47,7 +49,8 @@ namespace Data.Repositories
                     MainImage = p.MainImage,
                     Price = p.Price,
                     VendorId = p.VendorId,
-                    ProductStatus = p.ProductStatus
+                    ProductStatus = p.ProductStatus,
+                    CategoryName=p.CategoryName
                 }).ToListAsync();
             return products;
         }
@@ -106,7 +109,8 @@ namespace Data.Repositories
                 CategoryId = p.CategoryId,
                 MainImage = p.MainImage,
                 ProductStatus = p.ProductStatus,
-                VendorId = p.VendorId
+                VendorId = p.VendorId,
+                CategoryName=p.CategoryName
             }).FirstOrDefaultAsync();
             model.VariantModels = await _context.ProductVariants.Where(v => v.ProductId == Id).Select(v => new ProductVariantViewModel
             {

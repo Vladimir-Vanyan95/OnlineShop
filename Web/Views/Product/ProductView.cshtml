@@ -5,15 +5,24 @@
 }
 <div class="container-fluid" style="background-color:white; border:solid 1px; border-radius:5px;border-color:darkgrey">
     <div class="row pt-4">
-        <div class="col-sm-7"><img style="width:550px;height:450px;" src="~/images/@Model.Id/@Model.MainImage" /></div>
+        <div class="col-sm-7">
+            <img style="width:450px;" src="~/images/@Model.Id/@Model.MainImage" />
+        </div>
         <div class="col-sm-5 pt-2">
-            <h2>@Model.Name</h2>
-            <span>Product Status: @Model.ProductStatus</span><br />
+            <h2 class="product-font">@Model.Name</h2>
+            <span class="product-font">Type: @Model.CategoryName</span><br />
+            <span class="product-font">Product Status: @Model.ProductStatus</span><br />
             @foreach (var item in Model.VariantModels)
             {
-                <span>@item.VariantName:  @item.Value</span><br />
+                <span class="product-font">@item.VariantName:  @item.Value</span><br />
             }
-            <span>Sale Price &emsp;&emsp;<span style="font-size: 20px; color: brown;">@Model.Price ֏</span></span>
+            <span class="product-font">Sale Price &emsp;&emsp;<span style="font-size: 20px; color: brown;">@Model.Price ֏</span></span><br />
+            <label>Quantity</label>
+            <input id="count" min="1" value="1" class="form-control" type="number" />
+            <div style="position:absolute;bottom:40px;right:50px;">
+                <a role="button" class="btn btn-warning mb-1">Add to cart</a>
+            </div>
+
         </div>
     </div>
 </div>

@@ -20,7 +20,7 @@
     <ul class="dropdown-menu">
         @foreach (var item in Model[1].SubCategories)
         {
-            <li>
+            <li class="ml-4">
                 <a class="btn btn-light" asp-controller="Product" asp-action="Index" asp-route-categoryId="@item.Id"><img style="width:50px;" src="~/images/Categories/@item.Image" /><h4>@item.Name</h4></a>
             </li>
         }
