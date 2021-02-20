@@ -35,5 +35,10 @@ namespace Web.Controllers
             var product = await _productRepository.FindById(Id);
             return View(product);
         }
+        public async Task<IActionResult> AddToCart(int productId)
+        {
+            var resault= await _productRepository.AddToCart(productId);
+            return Json(new { count = resault.Item1, price = resault.Item2 });
+        }
     }
 }

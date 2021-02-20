@@ -15,15 +15,24 @@
 </head>
 
 <body class="main-Image">
-    <nav class="navbar bg-dark navbar-dark justify-content-center fixed-top">
-        <ul class="nav">
-            <li class="nav-item">
-                <form class="form-inline" asp-controller="Product" asp-action="Search">
-                    <input name="searchString" class="form-control mr-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-success" type="submit">Search</button>
-                </form>
-            </li>
-        </ul>
+    <nav class="navbar bg-dark navbar-dark fixed-top">
+        <div class="logo">
+            <i style="font-size:30px;" class="fas fa-robot"></i>
+        </div>
+        <div class="nav navbar-nav m-auto">
+            <a asp-controller="Product" asp-action="ProductCart" class="nav-item">
+                <span class="text-light">My Cart <i class="fa fa-shopping-cart cart"></i> </span>
+                <span id="allcount" style="color: #efa743;"></span>
+                <span class="pl-4 text-light">Total</span>
+                <span id="allprice" style="color: #efa743;"></span>
+            </a>
+        </div>
+        <div class="fa-pull-right pr-5">
+            <form class="form-inline" asp-controller="Product" asp-action="Search">
+                <input name="searchString" class="form-control mr-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
+        </div>
     </nav>
     <nav class="navbar navbar-expand navbar-light" style="background-color:seagreen; padding-top:65px;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,9 +40,6 @@
         </button>
         <div class="collapse navbar-collapse nav-nav " id="navbarNav">
             <ul class="navbar-nav " style="padding-left:35px;">
-                <li class="pt-2">
-                    <i style="font-size:30px;" class="fas fa-robot"></i>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link categories" asp-action="Index" asp-controller="Product"><h3><i class="fas fa-home"></i> Home</h3></a>
                 </li>
@@ -44,23 +50,23 @@
             <ul class="navbar-nav">
                 @if (User.IsInRole("admin"))
                 {
-                    <li class="nav-item ">
-                        <a class="nav-link" style="font-family: Verdana; color: silver;" asp-action="Product" asp-controller="Admin">Admin Panel</a>
+                    <li class="nav-item pr-2">
+                        <a class="nav-link btn btn-info text-light"asp-action="Product" asp-controller="Admin">Admin Panel</a>
                     </li>
                 }
                 @if (!User.Identity.IsAuthenticated)
                 {
-                    <li class="nav-item autenticate">
-                        <a class="nav-link" style="font-family: Verdana; color: silver;" asp-action="Login" asp-controller="Account">Sign In</a>
+                    <li class="nav-item pr-2">
+                        <a class="nav-link btn btn-outline-dark text-light" asp-action="Login" asp-controller="Account">Sign In</a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" style="font-family: Verdana; color: silver;" asp-action="Register" asp-controller="Account">Register</a>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-dark text-light" asp-action="Register" asp-controller="Account">Register</a>
                     </li>
                 }
                 else
                 {
-                    <li class="nav-item ">
-                        <a class="nav-link" style="font-family: Verdana; color: silver;" asp-action="SignOut" asp-controller="Account">Sign out</a>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-dark text-light"asp-action="SignOut" asp-controller="Account">Sign out</a>
                     </li>
                 }
             </ul>
@@ -94,8 +100,8 @@
         </div>
     </div>
     <br>
-    <script src="~/js/site.js"></script>
     <script src="~/jquery/jquery.js"></script>
+    <script src="~/js/site.js"></script>
     <script src="~/twitter-bootstrap/js/bootstrap.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

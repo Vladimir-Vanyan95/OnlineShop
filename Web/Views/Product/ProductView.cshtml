@@ -17,12 +17,22 @@
                 <span class="product-font">@item.VariantName:  @item.Value</span><br />
             }
             <span class="product-font">Sale Price &emsp;&emsp;<span style="font-size: 20px; color: brown;">@Model.Price ֏</span></span><br />
-            <label>Quantity</label>
-            <input id="count" min="1" value="1" class="form-control" type="number" />
-            <div style="position:absolute;bottom:40px;right:50px;">
-                <a role="button" class="btn btn-warning mb-1">Add to cart</a>
-            </div>
+            <div class="pt-3">
+                <button class="btn btn-warning pb-1 addtocart" data-id="@Model.Id" data-toggle="modal" data-target="#myModal">Add to cart</button>
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p>Item is added to cart</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
         </div>
     </div>
 </div>

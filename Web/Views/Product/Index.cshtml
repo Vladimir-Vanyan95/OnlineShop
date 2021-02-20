@@ -14,17 +14,22 @@
                     <img src="/images/@product.Id/@product.MainImage"
                          asp-append-version="true" />
                 </a>
+                <span class="product-status">@product.ProductStatus</span>
                 <span class="discount">- @product.Discount %</span>
                 <span class="@(product.Discount>0?"old-price":null)">@product.Price</span>
                 @if (product.Discount > 0)
                 {
                     <span class="new-price"> @product.NewPrice ֏</span>
                 }
+
             </div>
         }
     </div>
 }
 else
 {
-    <h3 style="color:crimson">Products not found</h3>
+    <div class="p-5">
+        <h3 style="color:crimson">Products not found</h3>
+    </div>
+
 }

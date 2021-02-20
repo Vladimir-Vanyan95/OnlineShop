@@ -20,7 +20,7 @@ namespace Data.Repositories
         }
         public async Task<int> Add(ProductAddViewModel productAdd)
         {
-            var category = await _context.Categories.Where(c => c.Id == productAdd.CategoryId).FirstOrDefaultAsync();
+            var categoryName = await _context.Categories.Select(p => new { p.Name }).FirstOrDefaultAsync();
             Product product = new Product
             {
                 Name = productAdd.Name,
@@ -30,7 +30,7 @@ namespace Data.Repositories
                 MainImage = productAdd.MainImage,
                 ProductStatus = productAdd.ProductStatus,
                 VendorId = productAdd.VendorId,
-                CategoryName=category.Name,
+                CategoryName = categoryName.Name,
                 CreatedDate = DateTime.Now,
             };
             await _context.Products.AddAsync(product);
@@ -129,6 +129,28 @@ namespace Data.Repositories
                 item.VariantName = variantModel.Name;
             }
             return model;
+        }
+        public async Task <Tuple<int,double>> AddToCart(int productId)
+        {
+            var check = await _context.Carts.Where(c => c.ProductId == productId).FirstOrDefaultAsync();
+            if (check == null)
+            {
+                Cart cart = new Cart
+                {
+                    Count = 1,
+                    ProductId = productId
+                };
+                await _context.Carts.AddAsync(cart);
+            }
+            else
+            {
+                check.Count=check.Count+1;
+            }
+            await _context.SaveChangesAsync();
+            var currentCart = await _context.Carts/*.Where(c=>c.ProductId==productId)*/.Select(c => new { c.Count, c.Product.Price }).ToListAsync();
+            int allcount = currentCart.Sum(c => c.Count);
+            double allprice = currentCart.Sum(c => c.Count * c.Price);
+            return Tuple.Create(allcount,allprice);
         }
     }
 }
