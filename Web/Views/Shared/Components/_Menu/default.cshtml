@@ -1,5 +1,5 @@
 ﻿@model List<CategoryViewModel>
-
+ <link href="~/css/style.css" rel="stylesheet" />
 <li  class="nav-item dropdown">
     <a href="#" class="nav-link dropdown-toggle categories" data-toggle="dropdown">
         <h3><i class="fas fa-mobile-alt"></i> @Model[0].Name</h3>
@@ -28,7 +28,7 @@
     </ul>
 </li>
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle categories" data-toggle="dropdown">
+    <a href="#" class="nav-link dropdown-toggle categories" data-toggle="dropdown">
         <h3><i class="fas fa-tv"></i> @Model[2].Name</h3>
     </a>
     <ul class="dropdown-menu">
@@ -41,32 +41,15 @@
     </ul>
 </li>
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle categories"data-toggle="dropdown">
+    <a href="#" class="nav-link dropdown-toggle categories"data-toggle="dropdown">
         <h3><i class="fas fa-clock"></i> @Model[3].Name</h3>
     </a>
     <ul class="dropdown-menu">
         @foreach (var item in Model[3].SubCategories)
-        {
+         {
             <li>
                 <a class="btn btn-light"asp-controller="Product"asp-action="Index" asp-route-CategoryId="@item.Id"><h4>@item.Name</h4></a>
             </li>
-        }
+         }
     </ul>
 </li>
-<style>
-    .navbar .nav-item .dropdown-menu {
-        display: none;
-    }
-
-    .navbar .nav-item:hover .nav-link {
-        color: #fff;
-    }
-
-    .navbar .nav-item:hover .dropdown-menu {
-        display: block;
-    }
-
-    .navbar .nav-item .dropdown-menu {
-        margin-top: 0;
-    }
-</style>

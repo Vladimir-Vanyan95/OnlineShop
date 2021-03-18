@@ -5,3 +5,9 @@
         $("#allprice").text(data.price);
     })
 });
+$(".addtocart").text(function () {
+    $.get("/Product/AddToCart", null), function (data) {
+        $("#allcount").text(data.count);
+        $("#allprice").text(data.price);
+    }
+})

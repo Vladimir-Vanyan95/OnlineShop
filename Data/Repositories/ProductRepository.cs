@@ -147,7 +147,7 @@ namespace Data.Repositories
                 check.Count=check.Count+1;
             }
             await _context.SaveChangesAsync();
-            var currentCart = await _context.Carts/*.Where(c=>c.ProductId==productId)*/.Select(c => new { c.Count, c.Product.Price }).ToListAsync();
+            var currentCart = await _context.Carts.Select(c => new { c.Count, c.Product.Price }).ToListAsync();
             int allcount = currentCart.Sum(c => c.Count);
             double allprice = currentCart.Sum(c => c.Count * c.Price);
             return Tuple.Create(allcount,allprice);
