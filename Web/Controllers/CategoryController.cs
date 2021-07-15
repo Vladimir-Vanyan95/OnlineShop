@@ -9,15 +9,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Data.Repositories;
+using Data.Models;
 
 namespace Web.Controllers
 {
     [Authorize(Roles = "admin")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IGenericRepository<Category> _categoryRepository;
         private readonly IWebHostEnvironment _webHostEnvironment; 
-        public CategoryController(ICategoryRepository categoryRepository,IWebHostEnvironment webHostEnvironment)
+        public CategoryController(IGenericRepository<Category> categoryRepository,IWebHostEnvironment webHostEnvironment)
         {
             _categoryRepository = categoryRepository;
             _webHostEnvironment = webHostEnvironment;
@@ -38,6 +40,12 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                Category category = new Category
+                {
+                    Name = model.Name,
+                    Image = ImageFile.FileName,
+                    CreatedDate = DateTime.Now
+                };
                 if (ImageFile != null)
                 {
                     model.Image = ImageFile.FileName;
@@ -54,47 +62,17 @@ namespace Web.Controllers
                 }
                 if (model.Id > 0)
                 {
-                    await _categoryRepository.Update(model);
+                     _categoryRepository.Update(category);
                 }
                 else
                 {
-                    await _categoryRepository.Add(model);
+                    await _categoryRepository.Add(category);
                 }
                 return RedirectToAction("Categories");
             }
             return View(model);
         }
-        [HttpGet]
-        public async Task<IActionResult> SubcategoryAdd()
-        {
-            await GetCategoriesViewBag();
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> SubcategoryAdd(CategoryAddViewModel model,IFormFile ImageFile)
-        {
-            if (ModelState.IsValid)
-            {
-                if (ImageFile != null)
-                {
-                    model.Image = ImageFile.FileName;
-                    var folderPath = _webHostEnvironment.WebRootPath + "/images/Categories";
-                    if (!Directory.Exists(folderPath))
-                    {
-                        Directory.CreateDirectory(folderPath);
-                    }
-                    var savePath = _webHostEnvironment.WebRootPath + $"/images/Categories/{ImageFile.FileName}";
-                    using(var stream=new FileStream(savePath, FileMode.Create))
-                    {
-                        ImageFile.CopyTo(stream);
-                    }
-                }
-                await _categoryRepository.SubcategoryAdd(model);
-                return RedirectToAction("Categories");
-            }
-            await GetCategoriesViewBag();
-            return View(model);
-        }
+      
         [HttpGet]
         public async Task<IActionResult> CategoryEdit(int Id)
         {

@@ -8,24 +8,22 @@ using Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Data.Repositories;
+using Data.Models;
 
 namespace Web.Controllers
 {
     public class VendorController : Controller
     {
-        private readonly IVendorRepository _vendorRepository;
+        private readonly IGenericRepository<Vendor> _vendorRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public VendorController(IVendorRepository vendorRepository, IWebHostEnvironment webHostEnvironment)
+        public VendorController(IGenericRepository<Vendor> vendorRepository, IWebHostEnvironment webHostEnvironment)
         {
             _vendorRepository = vendorRepository;
             _webHostEnvironment = webHostEnvironment;
         }
-        public async Task<IActionResult> VendorView(int? Id = null)
+        public async Task<IActionResult> VendorView()
         {
-            if (Id != null)
-            {
-               await _vendorRepository.Delete(Id);
-            }
             var vendors =await _vendorRepository.GetAll();
             return View(vendors);
         }
@@ -41,8 +39,14 @@ namespace Web.Controllers
             {
                 if (fileImage != null)
                 {
+                    Vendor vendor = new Vendor
+                    {
+                        Name = model.Name,
+                        Image = fileImage.FileName,
+                        CreatedDate = DateTime.Now
+                    };
                     model.Image = fileImage.FileName;
-                    await _vendorRepository.Add(model);
+                    await _vendorRepository.Add(vendor);
                     var folderPath = _webHostEnvironment.WebRootPath + "/images/VendorImg";
                     if (!Directory.Exists(folderPath))
                     {

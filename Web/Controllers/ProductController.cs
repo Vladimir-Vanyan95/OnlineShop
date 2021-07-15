@@ -4,26 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Data.Repositories.Interfaces;
+using Data.Models;
+using Data.Repositories;
 
 namespace Web.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IProductRepository _productRepository;
-        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        private readonly IGenericRepository<Category> _categoryRepsoitory;
+        private readonly IGenericRepository<Product> _productRepository;
+        public ProductController(IGenericRepository<Product> productRepository, IGenericRepository<Category> categoryRepository)
         {
-            _categoryRepository = categoryRepository;
+            _categoryRepsoitory = categoryRepository;
             _productRepository = productRepository;
         }
-        public async Task<IActionResult> Index(int? categoryId, int? vendorId)
+        public async Task<IActionResult> Index()
         {
-            var products = await _productRepository.GetAll(categoryId, vendorId);
+            var products = await _productRepository.GetAll();
             return View(products);
         }
         public async Task<IActionResult> Search(string searchString)
         {
-            var products = await _productRepository.GetAll(null, null);
+            var products = await _productRepository.GetAll();
             if (!String.IsNullOrEmpty(searchString))
             {
                 products = products.Where(p => p.Name.Contains(searchString)).ToList();
@@ -34,11 +36,6 @@ namespace Web.Controllers
         {
             var product = await _productRepository.FindById(Id);
             return View(product);
-        }
-        public async Task<IActionResult> AddToCart(int productId)
-        {
-            var resault= await _productRepository.AddToCart(productId);
-            return Json(new { count = resault.Item1, price = resault.Item2 });
         }
     }
 }

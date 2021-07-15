@@ -4,35 +4,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Data.Repositories.Interfaces;
 using Common.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using Data.Repositories;
+using Data.Models;
 
 namespace Web.Controllers
 {
     [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IProductRepository _productRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IVariantRepository _variantRepository;
-        private readonly IVendorRepository _vendorRepository;
-        public AdminController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment hostEnvironment, IVariantRepository variantRepository, IVendorRepository vendorRepository)
+        private readonly IGenericRepository<Category> _categoryRepository;
+        private readonly IGenericRepository<Product> _productRepository;
+        private readonly IGenericRepository<Variant> _variantRepository;
+        private readonly IGenericRepository<Vendor> _vendorRepository;
+        public AdminController(IGenericRepository<Product> productRepository, IGenericRepository<Category> categoryRepository, IWebHostEnvironment hostEnvironment, IGenericRepository<Variant> variantRepository, IGenericRepository<Vendor> vendorRepository)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _webHostEnvironment = hostEnvironment;
             _variantRepository = variantRepository;
             _vendorRepository = vendorRepository;
-        }
-        public async Task<IActionResult> Edit(int Id)
-        {
-            await CallViewBags();
-            var model = await _productRepository.Edit(Id);
-            return View("ProductAdd", model);
         }
         public async Task<IActionResult> ProductDelete(int Id)
         {
@@ -41,7 +36,7 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> Product()
         {
-            var products = await _productRepository.GetAll(null, null);
+            var products = await _productRepository.GetAll();
             return View(products);
         }
         [HttpGet]
@@ -62,12 +57,18 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 int ProdcutId = 0;
-                if (productAdd.Id > 0)
+                Product product = new Product
                 {
-                    ProdcutId = productAdd.Id;
-                    await _productRepository.Update(productAdd);
-                }
-                else { ProdcutId = await _productRepository.Add(productAdd); }
+                    Name = productAdd.Name,
+                    Discount = productAdd.Discount,
+                    CategoryId = productAdd.CategoryId,
+                    Price = productAdd.Price,
+                    VendorId = productAdd.VendorId,
+                    CategoryName = productAdd.CategoryName,
+                    ProductStatus = productAdd.ProductStatus,
+                    CreatedDate = DateTime.Now
+                };
+                await _productRepository.Add(product);
                 if (ImageFile != null)
                 {
                     List<ProductImageViewModel> images = new List<ProductImageViewModel>();
@@ -89,7 +90,6 @@ namespace Web.Controllers
                             ProductId = ProdcutId
                         });
                     }
-                    await _productRepository.AddImages(images);
                 }
                 await CallViewBags();
                 return RedirectToAction("ProductVariantAdd", "Variant", new { Id = ProdcutId });

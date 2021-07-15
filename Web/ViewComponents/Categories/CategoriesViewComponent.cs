@@ -4,14 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Data.Repositories.Interfaces;
+using Data.Repositories;
+using Data.Models;
 
 namespace Web.ViewComponents.Categories
 {
     [ViewComponent (Name ="_Categories")]
     public class CategoriesViewComponent:ViewComponent
     {
-        private readonly ICategoryRepository _categoryRepository;
-        public CategoriesViewComponent(ICategoryRepository categoryRepository)
+        private readonly IGenericRepository<Category> _categoryRepository;
+        public CategoriesViewComponent(IGenericRepository<Category> categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }

@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Common.ViewModels;
 using Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Data.Repositories;
+using Data.Models;
 
 namespace Web.Controllers
 {
     [Authorize(Roles = "admin")]
     public class VariantController : Controller
     {
-        private readonly IProductRepository _productRepository;
-        private readonly IVariantRepository _variantRepository;
-        public VariantController(IProductRepository productRepository, IVariantRepository variantRepository)
+        private readonly IGenericRepository<Variant> _variantRepository;
+        public VariantController(IGenericRepository<Product> productRepository, IGenericRepository<Variant> variantRepository)
         {
-            _productRepository = productRepository;
             _variantRepository = variantRepository;
         }
         [HttpGet]
@@ -29,33 +29,21 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _variantRepository.VariantAdd(model);
+                Variant variant = new Variant
+                {
+                    Name = model.Name,
+                    CreatedDate = DateTime.Now
+                };
+                await _variantRepository.Add(variant);
                 return RedirectToAction("VariantView");
             }
             return View(model);
         }
         public async Task<IActionResult> VariantView()
         {
-            var variants = await _variantRepository.GetVariants();
+            var variants = await _variantRepository.GetAll();
             return View(variants);
         }
-        [HttpGet]
-        public async Task<IActionResult> ProductVariantAdd(int Id)
-        {
-            ProductVariantViewModel model = new ProductVariantViewModel() { ProductId = Id };
-            ViewBag.variants = await _variantRepository.GetVariants();
-            return View(model);
-        }
-        [HttpPost]
-        public async Task<IActionResult> ProductVariantAdd(ProductVariantViewModel model)
-        {
-            ViewBag.variants = await _variantRepository.GetVariants();
-            if (ModelState.IsValid)
-            {
-                await _variantRepository.ProductVariantAdd(model);
-                model.Value = null;
-            }
-            return View(model);
-        }
+       
     }
 }
